@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrifasal | Everyday Kitchen Nutrition</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:#f8f5ec;color:#183124;line-height:1.6}
+nav{position:sticky;top:0;z-index:10;background:#f8f5ecee;border-bottom:1px solid #e5e1d6}
+.nav{max-width:1150px;margin:auto;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:27px;font-weight:800;color:#245c3a}.logo span{color:#d5a83b}
+.links{display:flex;gap:24px;align-items:center}.links a{color:#183124;text-decoration:none;font-weight:600;font-size:14px}
+.btn{display:inline-block;padding:12px 19px;border-radius:30px;text-decoration:none;font-weight:700}
+.primary{background:#245c3a;color:white}.outline{border:1px solid #245c3a;color:#245c3a}
+.hero{background:linear-gradient(120deg,#f8f5ec 50%,#eaf2df 50%);min-height:620px}
+.hero-in{max-width:1150px;margin:auto;padding:80px 22px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.badge{display:inline-block;background:#e2efdc;color:#245c3a;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:1px}
+h1{font:700 clamp(45px,6vw,74px)/1.03 Georgia,serif;letter-spacing:-3px;margin:18px 0}
+h1 em{font-style:normal;color:#3f7b4d}.hero p{font-size:18px;color:#647067;max-width:550px;margin-bottom:26px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.visual{height:400px;display:flex;align-items:center;justify-content:center;position:relative}
+.orbit{position:absolute;width:340px;height:340px;border-radius:50%;background:#dbe9ce}
+.bowl{width:260px;height:260px;border-radius:50%;background:linear-gradient(145deg,#739f54,#315f3a);display:flex;align-items:center;justify-content:center;color:white;text-align:center;z-index:2;box-shadow:0 25px 50px #23412844}
+.bowl strong{display:block;font:700 37px Georgia,serif}.bowl small{letter-spacing:2px}
+.float{position:absolute;background:white;padding:13px 17px;border-radius:16px;box-shadow:0 12px 30px #0002;font-weight:700;z-index:3}.f1{top:35px;right:10px}.f2{bottom:35px;left:0}
+section{padding:80px 22px}.container{max-width:1150px;margin:auto}
+.head{text-align:center;max-width:650px;margin:0 auto 42px}.eyebrow{text-transform:uppercase;letter-spacing:2px;color:#3f7b4d;font-size:12px;font-weight:800}
+.head h2{font:700 42px/1.15 Georgia,serif;margin:8px 0 12px}.head p{color:#647067}
+.products{background:#fff}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.product{background:#f8f5ec;border:1px solid #e7e1d3;border-radius:22px;overflow:hidden;transition:.2s}
+.product:hover{transform:translateY(-5px);box-shadow:0 18px 35px #19321e18}
+.pic{height:240px;display:flex;align-items:center;justify-content:center}
+.green{background:linear-gradient(135deg,#dcebd2,#a9c896)}.red{background:linear-gradient(135deg,#f3ddd9,#c77973)}.yellow{background:linear-gradient(135deg,#f5edc8,#d9bd54)}
+.pack{width:130px;height:175px;background:#fff;border-radius:12px 12px 18px 18px;box-shadow:0 15px 25px #0002;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;transform:rotate(-3deg)}
+.pack b{font:700 20px Georgia,serif;display:block}.pack small{font-size:9px;letter-spacing:1px}
+.info{padding:22px}.info h3{font-size:21px}.info p{font-size:14px;color:#647067;min-height:48px;margin-top:5px}
+.bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px}.tag{font-size:11px;font-weight:800;color:#245c3a;background:#e2efdc;padding:6px 9px;border-radius:20px}
+.why{background:#eef5e9}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.feature{background:white;padding:24px;border-radius:18px;text-align:center}.icon{font-size:30px}.feature h3{margin:6px 0}.feature p{font-size:13px;color:#647067}
+.story{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}.art{min-height:380px;border-radius:28px;background:linear-gradient(145deg,#315f3a,#8caf70);display:flex;align-items:center;justify-content:center;text-align:center;color:white;padding:30px}.art h3{font:700 40px Georgia,serif}
+.story h2{font:700 42px/1.15 Georgia,serif;margin:9px 0 15px}.story p{color:#647067;margin-bottom:20px}
+.cta{background:#245c3a;color:white;text-align:center}.cta h2{font:700 42px Georgia,serif}.cta p{opacity:.85;margin:8px 0 22px}.cta .primary{background:white;color:#245c3a}
+footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1150px;margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px}.foot h3{color:white;margin-bottom:8px}.foot a{display:block;color:#b9cbbd;text-decoration:none;font-size:13px;margin:5px 0}.copy{max-width:1150px;margin:30px auto 0;border-top:1px solid #ffffff1f;padding-top:15px;font-size:12px}
+@media(max-width:800px){.links{display:none}.hero-in,.story{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.features{grid-template-columns:1fr 1fr}.hero{min-height:auto}.visual{height:350px}.foot{grid-template-columns:1fr}}
+@media(max-width:500px){.features{grid-template-columns:1fr}section{padding:62px 18px}}
+</style>
+</head>
+<body>
+<nav><div class="nav"><a class="logo" href="#">Nutri<span>fasal</span></a><div class="links"><a href="#products">Products</a><a href="#why">Why Us</a><a href="#story">Our Story</a><a href="#contact">Contact</a><a class="btn primary" href="#products">Shop Now</a></div></div></nav>
+
+<header class="hero"><div class="hero-in">
+<div><span class="badge">🌿 EVERYDAY KITCHEN NUTRITION</span>
+<h1>Nature's goodness in <em>every spoon.</em></h1>
+<p>Simple, natural powders made for everyday kitchens. Add a spoon to your favourite drinks, meals and recipes.</p>
+<div class="actions"><a class="btn primary" href="#products">Explore Products</a><a class="btn outline" href="#story">Discover Nutrifasal</a></div></div>
+<div class="visual"><div class="orbit"></div><div class="float f1">🌿 Moringa</div><div class="float f2">🇮🇳 PAN India Delivery</div><div class="bowl"><div><strong>1 Spoon</strong><small>EVERYDAY NUTRITION</small></div></div></div>
+</div></header>
+
+<section id="products" class="products"><div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Our demo product section. Final photos, prices and pack details can be inserted after confirming the actual Amazon listings.</p></div>
+<div class="grid">
+<article class="product"><div class="pic green"><div class="pack"><div><b>Nutrifasal</b><small>MORINGA POWDER<br>EVERYDAY NUTRITION</small></div></div></div><div class="info"><h3>Moringa Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Green Goodness</span><a class="btn primary" href="https://amzn.in/d/06y0GCCd" target="_blank">Amazon</a></div></div></article>
+<article class="product"><div class="pic red"><div class="pack"><div><b>Nutrifasal</b><small>BEETROOT POWDER<br>EVERYDAY NUTRITION</small></div></div></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span><a class="btn primary" href="https://amzn.in/d/07nEWLT2" target="_blank">Amazon</a></div></div></article>
+<article class="product"><div class="pic yellow"><div class="pack"><div><b>Nutrifasal</b><small>BANANA POWDER<br>EVERYDAY NUTRITION</small></div></div></div><div class="info"><h3>Banana Powder</h3><p>A convenient ingredient for smoothies, breakfasts and recipes.</p><div class="bottom"><span class="tag">🍌 Everyday Favourite</span><a class="btn primary" href="https://amzn.in/d/0dMBrCGp" target="_blank">Amazon</a></div></div></article>
+</div></div></section>
+
+<section id="why" class="why"><div class="container"><div class="head"><div class="eyebrow">Why Nutrifasal</div><h2>Simple nutrition. Simple routine.</h2></div><div class="features">
+<div class="feature"><div class="icon">🥄</div><h3>Easy to Use</h3><p>Designed around adding a spoon to everyday food and drinks.</p></div>
+<div class="feature"><div class="icon">🌿</div><h3>Plant-Based Range</h3><p>A collection inspired by familiar fruits, vegetables and leaves.</p></div>
+<div class="feature"><div class="icon">🇮🇳</div><h3>Made for India</h3><p>A brand experience built for Indian kitchens and customers.</p></div>
+<div class="feature"><div class="icon">🛒</div><h3>Shop Online</h3><p>Connect customers directly to Nutrifasal products on Amazon.</p></div>
+</div></div></section>
+
+<section id="story"><div class="container story"><div class="art"><div><h3>From nature<br>to your kitchen.</h3><p>Nutrifasal brings everyday ingredients into a convenient powder format.</p></div></div><div><div class="eyebrow">The Nutrifasal Idea</div><h2>Everyday nutrition shouldn't feel complicated.</h2><p>Nutrifasal is built around a simple idea: make natural, everyday nutrition easy to add to the food and drinks people already enjoy.</p><a class="btn primary" href="#products">View Products</a></div></div></section>
+
+<section id="contact" class="cta"><div class="container"><h2>Ready to add a little goodness?</h2><p>Explore Nutrifasal products and make everyday nutrition a little simpler.</p><a class="btn primary" href="#products">Shop Nutrifasal</a></div></section>
+
+<footer><div class="foot"><div><h3 class="logo" style="color:white">Nutri<span>fasal</span></h3><p>Everyday Kitchen Nutrition.</p><p>🌿 Moringa • 🍠 Beetroot • 🍌 Banana Powder</p></div><div><h3>Quick Links</h3><a href="#products">Products</a><a href="#why">Why Nutrifasal</a><a href="#story">Our Story</a></div><div><h3>Connect</h3><a href="https://www.instagram.com/nutrifasal/" target="_blank">Instagram</a><a href="#products">Amazon Store</a></div></div><div class="copy">© 2026 Nutrifasal. Demo website.</div></footer>
+</body></html>
