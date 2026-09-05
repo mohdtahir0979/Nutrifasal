@@ -108,9 +108,9 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 
 <section id="products" class="products"><div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Explore our everyday range of naturally inspired powders, made to fit easily into your favourite drinks, meals and recipes.</p></div>
 <div class="grid">
-<article class="product"><div class="pic real"><img src="Moringa.jpeg" alt="Nutrifasal Moringa Leaf Powder"></div><div class="info"><h3>Moringa Leaf Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Moringa Leaf Powder</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
-<article class="product"><div class="pic real"><img src="Beetroot.jpeg" alt="Nutrifasal Beetroot Powder"></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
-<article class="product"><div class="pic real"><img src="Banana.jpeg" alt="Nutrifasal Banana Powder"></div><div class="info"><h3>Banana Powder</h3><p>A convenient ingredient for smoothies, breakfasts and recipes.</p><div class="bottom"><span class="tag">🍌 Everyday Favourite</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
+<article class="product product-card"><div class="pic real"><img src="Moringa.jpeg" alt="Nutrifasal Moringa Leaf Powder"></div><div class="info"><h3>Moringa Leaf Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Moringa Leaf Powder</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
+<article class="product product-card"><div class="pic real"><img src="Beetroot.jpeg" alt="Nutrifasal Beetroot Powder"></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
+<article class="product product-card"><div class="pic real"><img src="Banana.jpeg" alt="Nutrifasal Banana Powder"></div><div class="info"><h3>Banana Powder</h3><p>A convenient ingredient for smoothies, breakfasts and recipes.</p><div class="bottom"><span class="tag">🍌 Everyday Favourite</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
 </div></div></section>
 
 <section id="shop-direct" class="how"><div class="container">
@@ -194,88 +194,7 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
   </div>
 </div>
 
-<script>
-(function(){
-  const modal = document.getElementById('productModal');
-  const closeBtn = document.getElementById('modalClose');
-  const title = document.getElementById('modalTitle');
-  const image = document.getElementById('modalImage');
-  const total = document.getElementById('modalTotal');
-  const qtyValue = document.getElementById('qtyValue');
-  const minus = document.getElementById('qtyMinus');
-  const plus = document.getElementById('qtyPlus');
-  const add = document.getElementById('modalAdd');
-  let qty = 1, price = 0, product = '', pack = '100 g';
-  // Add the client's real prices here later: 100 and 200 are in rupees.
-  const productPrices = {
-    'Moringa Leaf Powder': {'100 g': 0, '200 g': 0},
-    'Beetroot Powder': {'100 g': 0, '200 g': 0},
-    'Banana Powder': {'100 g': 0, '200 g': 0}
-  };
 
-  function formatPrice(value){ return value > 0 ? '₹' + value : '₹—'; }
-  function loadPackPrices(){
-    const prices = productPrices[product] || {'100 g':0,'200 g':0};
-    document.querySelectorAll('.pack-option').forEach(function(option){
-      const p = prices[option.dataset.pack] || 0;
-      option.dataset.price = p;
-      option.querySelector('.pack-price').textContent = formatPrice(p);
-    });
-  }
-
-  function update(){
-    qtyValue.textContent = qty;
-    total.textContent = price > 0
-      ? 'Total: ₹' + (price * qty)
-      : 'Total: Price to be added';
-  }
-
-  document.querySelectorAll('.product').forEach(function(card){
-    card.addEventListener('click', function(e){
-      if(e.target.closest('.product-modal')) return;
-      const h3 = card.querySelector('h3');
-      const img = card.querySelector('img');
-      product = h3 ? h3.textContent.trim() : 'Nutrifasal Product';
-      title.textContent = product;
-      loadPackPrices();
-      image.src = img ? img.src : '';
-      image.alt = product;
-      qty = 1;
-      document.querySelectorAll('.pack-option').forEach(function(o){o.classList.remove('selected')});
-      const first = document.querySelector('.pack-option');
-      first.classList.add('selected');
-      pack = first.dataset.pack;
-      price = Number(first.dataset.price || 0);
-      update();
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden','false');
-    });
-  });
-
-  document.querySelectorAll('.pack-option').forEach(function(option){
-    option.addEventListener('click', function(){
-      document.querySelectorAll('.pack-option').forEach(function(o){o.classList.remove('selected')});
-      option.classList.add('selected');
-      pack = option.dataset.pack;
-      price = Number(option.dataset.price || 0);
-      update();
-    });
-  });
-
-  minus.addEventListener('click', function(){ if(qty > 1){qty--;update();} });
-  plus.addEventListener('click', function(){ qty++;update(); });
-
-  add.addEventListener('click', function(){
-    add.textContent = 'Added ' + product + ' (' + pack + ') ✓';
-    setTimeout(function(){ add.textContent = 'Add to Cart'; }, 1200);
-  });
-
-  function close(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true');}
-  closeBtn.addEventListener('click', close);
-  modal.addEventListener('click', function(e){ if(e.target === modal) close(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
-})();
-</script>
 
 
 <!-- Direct Purchase Checkout -->
@@ -306,42 +225,122 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 </div>
 
 
+
+
+
 <script>
 (function(){
-  const modal = document.getElementById('productModal');
-  const checkout = document.getElementById('checkoutModal');
-  const buy = document.getElementById('modalBuy');
-  const checkoutClose = document.getElementById('checkoutClose');
-  const cp = document.getElementById('checkoutProduct');
-  const ck = document.getElementById('checkoutPack');
-  const cq = document.getElementById('checkoutQty');
-  const ct = document.getElementById('checkoutTotal');
-  const form = document.getElementById('orderForm');
+  const productModal = document.getElementById('productModal');
+  const checkoutModal = document.getElementById('checkoutModal');
+  if (!productModal || !checkoutModal) return;
 
-  if (!modal || !checkout || !buy) return;
+  const title = document.getElementById('modalTitle');
+  const image = document.getElementById('modalImage');
+  const qtyValue = document.getElementById('qtyValue');
+  const total = document.getElementById('modalTotal');
+  const addBtn = document.getElementById('modalAdd');
+  const buyBtn = document.getElementById('modalBuy');
 
-  buy.addEventListener('click', function(){
-    cp.textContent = product || 'Nutrifasal Product';
-    ck.textContent = pack || '100 g';
-    cq.textContent = qty || 1;
-    ct.textContent = price > 0 ? '₹' + (price * qty) : 'Price to be added';
-    modal.classList.remove('show');
-    checkout.classList.add('show');
-    checkout.setAttribute('aria-hidden','false');
+  let product = '';
+  let qty = 1;
+  let pack = '100 g';
+  let price = 0;
+
+  function update(){
+    qtyValue.textContent = qty;
+    total.textContent = price > 0 ? 'Total: ₹' + (price * qty) : 'Total: Price to be added';
+  }
+
+  document.querySelectorAll('.product-card').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if(e.target.closest('a,button')) return;
+
+      const name = card.querySelector('h3');
+      const img = card.querySelector('img');
+
+      product = name ? name.textContent.trim() : 'Nutrifasal Product';
+      title.textContent = product;
+      image.src = img ? img.src : '';
+      image.alt = product;
+
+      qty = 1;
+      const options = document.querySelectorAll('.pack-option');
+      options.forEach(function(o){ o.classList.remove('selected'); });
+      if(options[0]){
+        options[0].classList.add('selected');
+        pack = options[0].dataset.pack || '100 g';
+        price = Number(options[0].dataset.price || 0);
+      }
+      update();
+
+      productModal.classList.add('show');
+      productModal.setAttribute('aria-hidden','false');
+    });
   });
+
+  document.querySelectorAll('.pack-option').forEach(function(option){
+    option.addEventListener('click', function(){
+      document.querySelectorAll('.pack-option').forEach(function(o){o.classList.remove('selected');});
+      option.classList.add('selected');
+      pack = option.dataset.pack || '100 g';
+      price = Number(option.dataset.price || 0);
+      update();
+    });
+  });
+
+  document.getElementById('qtyMinus').onclick = function(){
+    if(qty > 1){ qty--; update(); }
+  };
+  document.getElementById('qtyPlus').onclick = function(){
+    qty++; update();
+  };
+
+  function closeProduct(){
+    productModal.classList.remove('show');
+    productModal.setAttribute('aria-hidden','true');
+  }
+
+  document.getElementById('modalClose').onclick = closeProduct;
+
+  addBtn.onclick = function(){
+    addBtn.textContent = 'Added ✓';
+    setTimeout(function(){ addBtn.textContent = 'Add to Cart'; }, 1200);
+  };
+
+  buyBtn.onclick = function(e){
+    e.preventDefault();
+
+    document.getElementById('checkoutProduct').textContent = product || 'Nutrifasal Product';
+    document.getElementById('checkoutPack').textContent = pack;
+    document.getElementById('checkoutQty').textContent = qty;
+    document.getElementById('checkoutTotal').textContent =
+      price > 0 ? '₹' + (price * qty) : 'Price to be added';
+
+    closeProduct();
+    checkoutModal.classList.add('show');
+    checkoutModal.setAttribute('aria-hidden','false');
+  };
 
   function closeCheckout(){
-    checkout.classList.remove('show');
-    checkout.setAttribute('aria-hidden','true');
+    checkoutModal.classList.remove('show');
+    checkoutModal.setAttribute('aria-hidden','true');
   }
-  checkoutClose.addEventListener('click', closeCheckout);
-  checkout.addEventListener('click', function(e){
-    if(e.target === checkout) closeCheckout();
+
+  document.getElementById('checkoutClose').onclick = closeCheckout;
+  checkoutModal.addEventListener('click', function(e){
+    if(e.target === checkoutModal) closeCheckout();
   });
 
-  form.addEventListener('submit', function(e){
+  document.getElementById('orderForm').addEventListener('submit', function(e){
     e.preventDefault();
-    alert('Your order details have been captured. Payment and final order submission will be connected next.');
+    alert('Order details captured. Payment connection will be added next.');
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      closeProduct();
+      closeCheckout();
+    }
   });
 })();
 </script>
