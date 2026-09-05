@@ -118,6 +118,29 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 .cart-empty{text-align:center;color:#647067;padding:50px 10px}
 @media(max-width:700px){.cart-button{padding:8px 10px}.cart-panel{width:94%}}
 
+
+.cart-button{border:0;background:#eef5e9;color:#173c29;border-radius:14px;padding:10px 15px;font-weight:800;cursor:pointer;white-space:nowrap}
+.cart-count{display:inline-flex;min-width:20px;height:20px;padding:0 5px;border-radius:20px;background:#286b43;color:#fff;align-items:center;justify-content:center;font-size:12px;margin-left:5px}
+.cart-drawer{position:fixed;inset:0;background:rgba(20,32,24,.55);display:none;z-index:10000}
+.cart-drawer.show{display:block}
+.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(430px,92vw);background:#fbfaf5;padding:25px;box-sizing:border-box;box-shadow:-15px 0 50px rgba(0,0,0,.2);overflow:auto}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cart-head h2{margin:0;color:#173c29}
+.cart-close{border:0;background:#fff;border-radius:50%;width:40px;height:40px;font-size:24px;cursor:pointer}
+.cart-item{background:#fff;border:1px solid #e4e6dc;border-radius:16px;padding:14px;margin:10px 0}
+.cart-item-top{display:flex;gap:12px}
+.cart-item img{width:65px;height:65px;border-radius:10px;object-fit:cover}
+.cart-item-info{flex:1}.cart-item-info strong{display:block;color:#173c29}.cart-item-info small{color:#647067}
+.cart-item-bottom{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-top:12px}
+.cart-qty{display:flex;align-items:center;border:1px solid #d8ddcf;border-radius:10px;overflow:hidden}
+.cart-qty button{border:0;background:#fff;width:32px;height:32px;cursor:pointer;font-size:18px}
+.cart-qty span{min-width:30px;text-align:center;font-weight:800}
+.cart-remove{border:0;background:none;color:#a04438;cursor:pointer;font-size:12px}
+.cart-total{border-top:1px solid #ddd;margin-top:20px;padding-top:18px;display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:#173c29}
+.cart-checkout{width:100%;margin-top:15px;border:0;border-radius:15px;padding:15px;background:#286b43;color:#fff;font-size:17px;font-weight:800;cursor:pointer}
+.cart-empty{text-align:center;color:#647067;padding:50px 10px}
+@media(max-width:800px){.cart-button{padding:8px 10px;font-size:13px}}
+
 </style>
 </head>
 <body>
@@ -253,125 +276,7 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 
 
 
-<script>
-(function(){
-  const productModal = document.getElementById('productModal');
-  const checkoutModal = document.getElementById('checkoutModal');
-  if (!productModal || !checkoutModal) return;
 
-  const title = document.getElementById('modalTitle');
-  const image = document.getElementById('modalImage');
-  const qtyValue = document.getElementById('qtyValue');
-  const total = document.getElementById('modalTotal');
-  const addBtn = document.getElementById('modalAdd');
-  const buyBtn = document.getElementById('modalBuy');
-
-  let product = '';
-  let qty = 1;
-  let pack = '100 g';
-  let price = 0;
-
-  function update(){
-    qtyValue.textContent = qty;
-    total.textContent = price > 0 ? 'Total: ₹' + (price * qty) : 'Total: Price to be added';
-  }
-
-  document.querySelectorAll('.product-card').forEach(function(card){
-    card.addEventListener('click', function(e){
-      if(e.target.closest('a,button')) return;
-
-      const name = card.querySelector('h3');
-      const img = card.querySelector('img');
-
-      product = name ? name.textContent.trim() : 'Nutrifasal Product';
-      title.textContent = product;
-      image.src = img ? img.src : '';
-      image.alt = product;
-
-      qty = 1;
-      const options = document.querySelectorAll('.pack-option');
-      options.forEach(function(o){ o.classList.remove('selected'); });
-      if(options[0]){
-        options[0].classList.add('selected');
-        pack = options[0].dataset.pack || '100 g';
-        price = Number(options[0].dataset.price || 0);
-      }
-      update();
-
-      productModal.classList.add('show');
-      productModal.setAttribute('aria-hidden','false');
-    });
-  });
-
-  document.querySelectorAll('.pack-option').forEach(function(option){
-    option.addEventListener('click', function(){
-      document.querySelectorAll('.pack-option').forEach(function(o){o.classList.remove('selected');});
-      option.classList.add('selected');
-      pack = option.dataset.pack || '100 g';
-      price = Number(option.dataset.price || 0);
-      update();
-    });
-  });
-
-  document.getElementById('qtyMinus').onclick = function(){
-    if(qty > 1){ qty--; update(); }
-  };
-  document.getElementById('qtyPlus').onclick = function(){
-    qty++; update();
-  };
-
-  function closeProduct(){
-    productModal.classList.remove('show');
-    productModal.setAttribute('aria-hidden','true');
-  }
-
-  document.getElementById('modalClose').onclick = closeProduct;
-
-  addBtn.onclick = function(){
-    window.dispatchEvent(new CustomEvent('nutrifasal-product-added', {
-      detail:{product:product, pack:pack, price:price, qty:qty, image:image.src}
-    }));
-    addBtn.textContent = 'Added ✓';
-    setTimeout(function(){ addBtn.textContent = 'Add to Cart'; }, 1200);
-  };
-
-  buyBtn.onclick = function(e){
-    e.preventDefault();
-
-    document.getElementById('checkoutProduct').textContent = product || 'Nutrifasal Product';
-    document.getElementById('checkoutPack').textContent = pack;
-    document.getElementById('checkoutQty').textContent = qty;
-    document.getElementById('checkoutTotal').textContent =
-      price > 0 ? '₹' + (price * qty) : 'Price to be added';
-
-    closeProduct();
-    checkoutModal.classList.add('show');
-    checkoutModal.setAttribute('aria-hidden','false');
-  };
-
-  function closeCheckout(){
-    checkoutModal.classList.remove('show');
-    checkoutModal.setAttribute('aria-hidden','true');
-  }
-
-  document.getElementById('checkoutClose').onclick = closeCheckout;
-  checkoutModal.addEventListener('click', function(e){
-    if(e.target === checkoutModal) closeCheckout();
-  });
-
-  document.getElementById('orderForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    alert('Order details captured. Payment connection will be added next.');
-  });
-
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape'){
-      closeProduct();
-      closeCheckout();
-    }
-  });
-})();
-</script>
 
 
 <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
@@ -387,78 +292,196 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 </div>
 
 
+
+
+
 <script>
-(function(){
-  const cart = [];
-  const drawer = document.getElementById('cartDrawer');
+document.addEventListener('DOMContentLoaded', function () {
+  const productModal = document.getElementById('productModal');
+  const checkoutModal = document.getElementById('checkoutModal');
+  const cartDrawer = document.getElementById('cartDrawer');
   const cartButton = document.getElementById('cartButton');
   const cartClose = document.getElementById('cartClose');
   const cartItems = document.getElementById('cartItems');
   const cartCount = document.getElementById('cartCount');
   const cartTotal = document.getElementById('cartTotal');
   const cartCheckout = document.getElementById('cartCheckout');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalImage = document.getElementById('modalImage');
+  const qtyValue = document.getElementById('qtyValue');
+  const modalTotal = document.getElementById('modalTotal');
+  const modalAdd = document.getElementById('modalAdd');
+  const modalBuy = document.getElementById('modalBuy');
+
+  let currentProduct = null;
+  let currentPack = '100 g';
+  let currentPrice = 0;
+  let currentQty = 1;
+  let cart = JSON.parse(localStorage.getItem('nutrifasalCart') || '[]');
+
+  function saveCart(){ localStorage.setItem('nutrifasalCart', JSON.stringify(cart)); }
+
+  function money(v){ return Number(v) > 0 ? '₹' + Number(v).toLocaleString('en-IN') : '₹—'; }
 
   function renderCart(){
-    const count = cart.reduce((s,i)=>s+i.qty,0);
+    const count = cart.reduce((s,i)=>s + Number(i.qty), 0);
     cartCount.textContent = count;
     if(!cart.length){
-      cartItems.innerHTML = '<div class="cart-empty">Your cart is empty.<br><br>Select a product and click <strong>Add to Cart</strong>.</div>';
+      cartItems.innerHTML = '<div class="cart-empty">Your cart is empty.<br><br>Choose a product to get started.</div>';
       cartTotal.textContent = '₹—';
       return;
     }
-    let total = 0;
+    let total = 0, hasMissingPrice = false;
     cartItems.innerHTML = cart.map((item,index)=>{
-      const itemTotal = item.price * item.qty;
-      total += itemTotal;
-      return '<div class="cart-item"><div class="cart-item-top">' +
-        '<img src="'+item.image+'" alt="'+item.product+'">' +
-        '<div class="cart-item-info"><strong>'+item.product+'</strong><small>'+item.pack+' · '+(item.price>0?'₹'+item.price:'Price to be added')+'</small></div></div>' +
-        '<div class="cart-item-bottom"><div class="cart-qty"><button data-action="minus" data-index="'+index+'">−</button><span>'+item.qty+'</span><button data-action="plus" data-index="'+index+'">+</button></div>' +
-        '<strong>'+(item.price>0?'₹'+itemTotal:'₹—')+'</strong><button class="cart-remove" data-action="remove" data-index="'+index+'">Remove</button></div></div>';
+      const line = Number(item.price) * Number(item.qty);
+      if(Number(item.price) > 0) total += line; else hasMissingPrice = true;
+      return `
+        <div class="cart-item">
+          <div class="cart-item-top">
+            <img src="${item.image}" alt="${item.product}">
+            <div class="cart-item-info">
+              <strong>${item.product}</strong>
+              <small>${item.pack} · ${Number(item.price)>0 ? money(item.price) : 'Price to be added'}</small>
+            </div>
+          </div>
+          <div class="cart-item-bottom">
+            <div class="cart-qty">
+              <button type="button" data-action="minus" data-index="${index}">−</button>
+              <span>${item.qty}</span>
+              <button type="button" data-action="plus" data-index="${index}">+</button>
+            </div>
+            <strong>${Number(item.price)>0 ? money(line) : '₹—'}</strong>
+            <button type="button" class="cart-remove" data-action="remove" data-index="${index}">Remove</button>
+          </div>
+        </div>`;
     }).join('');
-    cartTotal.textContent = total > 0 ? '₹'+total : '₹—';
+    cartTotal.textContent = hasMissingPrice ? '₹—' : money(total);
   }
 
-  window.nutrifasalAddToCart = function(product, pack, price, qty, image){
-    const existing = cart.find(i=>i.product===product && i.pack===pack);
-    if(existing) existing.qty += qty;
-    else cart.push({product,pack,price,qty,image});
+  function openCart(){
     renderCart();
-    drawer.classList.add('show');
-    drawer.setAttribute('aria-hidden','false');
-  };
+    cartDrawer.classList.add('show');
+    cartDrawer.setAttribute('aria-hidden','false');
+  }
+  function closeCart(){
+    cartDrawer.classList.remove('show');
+    cartDrawer.setAttribute('aria-hidden','true');
+  }
 
-  cartButton.addEventListener('click',()=>{renderCart();drawer.classList.add('show');drawer.setAttribute('aria-hidden','false');});
-  cartClose.addEventListener('click',()=>{drawer.classList.remove('show');drawer.setAttribute('aria-hidden','true');});
-  drawer.addEventListener('click',e=>{if(e.target===drawer){drawer.classList.remove('show');drawer.setAttribute('aria-hidden','true');}});
+  function openProduct(card){
+    currentProduct = card.dataset.product || card.querySelector('h3')?.textContent.trim() || 'Nutrifasal Product';
+    currentPack = '100 g';
+    currentPrice = 0;
+    currentQty = 1;
+    const img = card.querySelector('img');
+    modalTitle.textContent = currentProduct;
+    modalImage.src = img ? img.getAttribute('src') : '';
+    qtyValue.textContent = '1';
+    document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
+    const firstPack = document.querySelector('.pack-option[data-pack="100 g"]');
+    if(firstPack){ firstPack.classList.add('selected'); currentPrice = Number(firstPack.dataset.price || 0); }
+    modalTotal.textContent = money(currentPrice * currentQty);
+    productModal.classList.add('show');
+    productModal.setAttribute('aria-hidden','false');
+  }
 
-  cartItems.addEventListener('click',function(e){
-    const b=e.target.closest('[data-action]');
-    if(!b)return;
-    const i=Number(b.dataset.index);
-    if(b.dataset.action==='plus') cart[i].qty++;
-    if(b.dataset.action==='minus'){cart[i].qty--;if(cart[i].qty<1)cart.splice(i,1);}
-    if(b.dataset.action==='remove') cart.splice(i,1);
-    renderCart();
+  document.querySelectorAll('.product-card').forEach(card=>{
+    card.addEventListener('click', function(e){
+      const target = e.target.closest('a.btn.primary');
+      if(target){ e.preventDefault(); e.stopPropagation(); }
+      if(target || e.target.closest('.product-card-image')) openProduct(card);
+    });
   });
 
-  cartCheckout.addEventListener('click',function(){
-    drawer.classList.remove('show');
-    drawer.setAttribute('aria-hidden','true');
-    const checkout=document.getElementById('checkoutModal');
-    if(checkout){
-      checkout.classList.add('show');
-      checkout.setAttribute('aria-hidden','false');
+  document.querySelectorAll('.pack-option').forEach(option=>{
+    option.addEventListener('click', function(){
+      document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
+      option.classList.add('selected');
+      currentPack = option.dataset.pack || '100 g';
+      currentPrice = Number(option.dataset.price || 0);
+      modalTotal.textContent = money(currentPrice * currentQty);
+    });
+  });
+
+  const minus = document.getElementById('qtyMinus');
+  const plus = document.getElementById('qtyPlus');
+  if(minus) minus.addEventListener('click', function(){ if(currentQty>1){currentQty--;qtyValue.textContent=currentQty;modalTotal.textContent=money(currentPrice*currentQty);} });
+  if(plus) plus.addEventListener('click', function(){ currentQty++;qtyValue.textContent=currentQty;modalTotal.textContent=money(currentPrice*currentQty); });
+
+  function addCurrentToCart(){
+    const image = modalImage.getAttribute('src') || '';
+    const existing = cart.find(i=>i.product===currentProduct && i.pack===currentPack);
+    if(existing) existing.qty += currentQty;
+    else cart.push({product:currentProduct, pack:currentPack, price:currentPrice, qty:currentQty, image:image});
+    saveCart(); renderCart();
+  }
+
+  if(modalAdd) modalAdd.addEventListener('click', function(){
+    addCurrentToCart();
+    modalAdd.textContent='Added ✓';
+    setTimeout(()=>modalAdd.textContent='Add to Cart',1000);
+  });
+
+  if(modalBuy) modalBuy.addEventListener('click', function(){
+    addCurrentToCart();
+    productModal.classList.remove('show');
+    if(cartCheckout) cartCheckout.click();
+  });
+
+  if(cartButton) cartButton.addEventListener('click', openCart);
+  if(cartClose) cartClose.addEventListener('click', closeCart);
+  if(cartDrawer) cartDrawer.addEventListener('click', e=>{if(e.target===cartDrawer)closeCart();});
+
+  cartItems.addEventListener('click', function(e){
+    const btn=e.target.closest('[data-action]');
+    if(!btn)return;
+    const i=Number(btn.dataset.index);
+    if(btn.dataset.action==='plus') cart[i].qty++;
+    if(btn.dataset.action==='minus'){cart[i].qty--; if(cart[i].qty<=0) cart.splice(i,1);}
+    if(btn.dataset.action==='remove') cart.splice(i,1);
+    saveCart(); renderCart();
+  });
+
+  if(cartCheckout) cartCheckout.addEventListener('click', function(){
+    if(!cart.length){ alert('Your cart is empty.'); return; }
+    closeCart();
+    if(checkoutModal){
+      const summary = cart.map(i=>`${i.product} — ${i.pack} × ${i.qty}`).join(' | ');
+      const cp=document.getElementById('checkoutProduct');
+      const ck=document.getElementById('checkoutPack');
+      const cq=document.getElementById('checkoutQty');
+      const ct=document.getElementById('checkoutTotal');
+      if(cp) cp.value=summary;
+      if(ck) ck.value='Multiple items';
+      if(cq) cq.value=cart.reduce((s,i)=>s+i.qty,0);
+      const hasMissing=cart.some(i=>Number(i.price)<=0);
+      const total=cart.reduce((s,i)=>s+(Number(i.price)*i.qty),0);
+      if(ct) ct.value=hasMissing ? 'Price to be added' : money(total);
+      checkoutModal.classList.add('show');
+      checkoutModal.setAttribute('aria-hidden','false');
     }
   });
 
-  window.addEventListener('nutrifasal-product-added',function(e){
-    const d=e.detail;
-    window.nutrifasalAddToCart(d.product,d.pack,d.price,d.qty,d.image);
+  // Close buttons for existing modals.
+  document.querySelectorAll('[data-close], .modal-close').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      const m=btn.closest('.modal');
+      if(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}
+    });
+  });
+  [productModal,checkoutModal].forEach(m=>{
+    if(m) m.addEventListener('click',e=>{if(e.target===m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}});
+  });
+
+  // Checkout form: keep it as a customer-details capture step for now.
+  const orderForm=document.getElementById('orderForm');
+  if(orderForm) orderForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Order details captured. Payment integration can be connected once prices and payment method are finalized.');
   });
 
   renderCart();
-})();
+});
 </script>
 
 </body></html>
