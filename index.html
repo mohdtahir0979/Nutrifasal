@@ -81,6 +81,18 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 .modal-add{width:100%;border:0;border-radius:15px;padding:15px;background:#286b43;color:white;font-size:17px;font-weight:800;cursor:pointer}
 @media(max-width:600px){.product-modal-box{padding:20px}.modal-image{height:220px}.pack-options{grid-template-columns:1fr}}
 
+
+.buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-buy{width:100%;border:0;border-radius:15px;padding:15px;background:#173c29;color:white;font-size:17px;font-weight:800;cursor:pointer}
+.checkout-box{max-width:520px}
+.checkout-summary{background:#eef5e9;border-radius:16px;padding:15px;margin:15px 0}
+.checkout-summary div{display:flex;justify-content:space-between;gap:15px;padding:7px 0;color:#647067}
+.checkout-summary strong{color:#173c29;text-align:right}
+#orderForm{display:grid;gap:10px}
+#orderForm input{width:100%;box-sizing:border-box;border:1px solid #d8ddcf;border-radius:13px;padding:14px;font:inherit;background:white}
+.checkout-note{font-size:12px;color:#7a837c;margin-top:12px}
+@media(max-width:600px){.buy-actions{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -178,7 +190,7 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
     </div>
 
     <div class="modal-total" id="modalTotal">Price: ₹—</div>
-    <button class="modal-add" id="modalAdd">Add to Cart</button>
+    <div class="buy-actions"><button class="modal-add" id="modalAdd">Add to Cart</button><button class="modal-buy" id="modalBuy">Buy Now</button></div>
   </div>
 </div>
 
@@ -262,6 +274,75 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
   closeBtn.addEventListener('click', close);
   modal.addEventListener('click', function(e){ if(e.target === modal) close(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+</script>
+
+
+<!-- Direct Purchase Checkout -->
+<div class="product-modal" id="checkoutModal" aria-hidden="true">
+  <div class="product-modal-box checkout-box" role="dialog" aria-modal="true">
+    <button class="product-modal-close" id="checkoutClose" aria-label="Close">×</button>
+    <div class="eyebrow">Secure Order</div>
+    <h2 class="modal-title">Complete Your Order</h2>
+    <p class="modal-subtitle" id="checkoutSummary">Product details</p>
+
+    <div class="checkout-summary">
+      <div><span>Product</span><strong id="checkoutProduct">—</strong></div>
+      <div><span>Pack</span><strong id="checkoutPack">—</strong></div>
+      <div><span>Quantity</span><strong id="checkoutQty">—</strong></div>
+      <div><span>Total</span><strong id="checkoutTotal">Price to be added</strong></div>
+    </div>
+
+    <form id="orderForm">
+      <input required name="name" placeholder="Full Name">
+      <input required name="phone" type="tel" placeholder="Mobile Number">
+      <input required name="address" placeholder="Delivery Address">
+      <input required name="city" placeholder="City">
+      <input required name="pincode" inputmode="numeric" placeholder="PIN Code">
+      <button class="modal-buy" type="submit">Place Order</button>
+    </form>
+    <p class="checkout-note">Payment can be connected here once the client confirms the preferred payment gateway.</p>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  const modal = document.getElementById('productModal');
+  const checkout = document.getElementById('checkoutModal');
+  const buy = document.getElementById('modalBuy');
+  const checkoutClose = document.getElementById('checkoutClose');
+  const cp = document.getElementById('checkoutProduct');
+  const ck = document.getElementById('checkoutPack');
+  const cq = document.getElementById('checkoutQty');
+  const ct = document.getElementById('checkoutTotal');
+  const form = document.getElementById('orderForm');
+
+  if (!modal || !checkout || !buy) return;
+
+  buy.addEventListener('click', function(){
+    cp.textContent = product || 'Nutrifasal Product';
+    ck.textContent = pack || '100 g';
+    cq.textContent = qty || 1;
+    ct.textContent = price > 0 ? '₹' + (price * qty) : 'Price to be added';
+    modal.classList.remove('show');
+    checkout.classList.add('show');
+    checkout.setAttribute('aria-hidden','false');
+  });
+
+  function closeCheckout(){
+    checkout.classList.remove('show');
+    checkout.setAttribute('aria-hidden','true');
+  }
+  checkoutClose.addEventListener('click', closeCheckout);
+  checkout.addEventListener('click', function(e){
+    if(e.target === checkout) closeCheckout();
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Your order details have been captured. Payment and final order submission will be connected next.');
+  });
 })();
 </script>
 
