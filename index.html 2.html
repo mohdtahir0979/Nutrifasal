@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrifasal | Everyday Kitchen Nutrition</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:#f8f5ec;color:#183124;line-height:1.6}
+nav{position:sticky;top:0;z-index:10;background:#f8f5ecee;border-bottom:1px solid #e5e1d6}
+.nav{max-width:1150px;margin:auto;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:27px;font-weight:800;color:#245c3a}.logo span{color:#d5a83b}
+.links{display:flex;gap:24px;align-items:center}.links a{color:#183124;text-decoration:none;font-weight:600;font-size:14px}
+.btn{display:inline-block;padding:12px 19px;border-radius:30px;text-decoration:none;font-weight:700}
+.primary{background:#245c3a;color:white}.outline{border:1px solid #245c3a;color:#245c3a}
+.hero{background:linear-gradient(120deg,#f8f5ec 50%,#eaf2df 50%);min-height:620px}
+.hero-in{max-width:1150px;margin:auto;padding:80px 22px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.badge{display:inline-block;background:#e2efdc;color:#245c3a;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:1px}
+h1{font:700 clamp(45px,6vw,74px)/1.03 Georgia,serif;letter-spacing:-3px;margin:18px 0}
+h1 em{font-style:normal;color:#3f7b4d}.hero p{font-size:18px;color:#647067;max-width:550px;margin-bottom:26px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.visual{height:400px;display:flex;align-items:center;justify-content:center;position:relative}
+.orbit{position:absolute;width:340px;height:340px;border-radius:50%;background:#dbe9ce}
+.bowl{width:260px;height:260px;border-radius:50%;background:linear-gradient(145deg,#739f54,#315f3a);display:flex;align-items:center;justify-content:center;color:white;text-align:center;z-index:2;box-shadow:0 25px 50px #23412844}
+.bowl strong{display:block;font:700 37px Georgia,serif}.bowl small{letter-spacing:2px}
+.float{position:absolute;background:white;padding:13px 17px;border-radius:16px;box-shadow:0 12px 30px #0002;font-weight:700;z-index:3}.f1{top:35px;right:10px}.f2{bottom:35px;left:0}
+section{padding:80px 22px}.container{max-width:1150px;margin:auto}
+.head{text-align:center;max-width:650px;margin:0 auto 42px}.eyebrow{text-transform:uppercase;letter-spacing:2px;color:#3f7b4d;font-size:12px;font-weight:800}
+.head h2{font:700 42px/1.15 Georgia,serif;margin:8px 0 12px}.head p{color:#647067}
+.products{background:#fff}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.product{background:#f8f5ec;border:1px solid #e7e1d3;border-radius:22px;overflow:hidden;transition:.2s}
+.product:hover{transform:translateY(-5px);box-shadow:0 18px 35px #19321e18}
+.pic{height:240px;display:flex;align-items:center;justify-content:center}
+.pic.real{background:#f4f1e8;height:260px;overflow:hidden}
+.pic.real img{width:100%;height:100%;object-fit:cover;display:block}
+
+.green{background:linear-gradient(135deg,#dcebd2,#a9c896)}.red{background:linear-gradient(135deg,#f3ddd9,#c77973)}.yellow{background:linear-gradient(135deg,#f5edc8,#d9bd54)}
+.pack{width:130px;height:175px;background:#fff;border-radius:12px 12px 18px 18px;box-shadow:0 15px 25px #0002;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;transform:rotate(-3deg)}
+.pack b{font:700 20px Georgia,serif;display:block}.pack small{font-size:9px;letter-spacing:1px}
+.info{padding:22px}.info h3{font-size:21px}.info p{font-size:14px;color:#647067;min-height:48px;margin-top:5px}
+.bottom{display:flex;justify-content:space-between;align-items:center;margin-top:18px}.tag{font-size:11px;font-weight:800;color:#245c3a;background:#e2efdc;padding:6px 9px;border-radius:20px}
+.how{background:#fbfaf5}
+.use-list{max-width:820px;margin:32px auto 0}
+.use-item{background:white;border:1px solid #e7e1d3;border-radius:18px;margin:12px 0;overflow:hidden}
+.use-item summary{list-style:none;cursor:pointer;padding:20px 22px;font-weight:800;font-size:16px;display:flex;justify-content:space-between;align-items:center}
+.use-item summary::-webkit-details-marker{display:none}
+.use-item summary span{font-size:22px;color:#245c3a;transition:.2s}
+.use-item[open] summary span{transform:rotate(45deg)}
+.use-content{padding:0 22px 20px;color:#647067;font-size:14px}
+.use-content p{margin:7px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.step{background:white;border:1px solid #e7e1d3;border-radius:20px;padding:28px;text-align:center}.step-num{width:48px;height:48px;margin:0 auto 14px;border-radius:50%;background:#e2efdc;color:#245c3a;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}.step h3{font-size:20px;margin-bottom:7px}.step p{font-size:14px;color:#647067}.use-products{margin-top:35px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.use-card{padding:20px;border-radius:18px;background:#eef5e9}.use-card h3{font-size:17px;margin-bottom:6px}.use-card p{font-size:13px;color:#647067}.why{background:#eef5e9}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.feature{background:white;padding:24px;border-radius:18px;text-align:center}.icon{font-size:30px}.feature h3{margin:6px 0}.feature p{font-size:13px;color:#647067}
+.story{display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center}.art{min-height:380px;border-radius:28px;background:linear-gradient(145deg,#315f3a,#8caf70);display:flex;align-items:center;justify-content:center;text-align:center;color:white;padding:30px}.art h3{font:700 40px Georgia,serif}
+.story h2{font:700 42px/1.15 Georgia,serif;margin:9px 0 15px}.story p{color:#647067;margin-bottom:20px}
+.cta{background:#245c3a;color:white;text-align:center}.cta h2{font:700 42px Georgia,serif}.cta p{opacity:.85;margin:8px 0 22px}.cta .primary{background:white;color:#245c3a}
+footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1150px;margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px}.foot h3{color:white;margin-bottom:8px}.foot a{display:block;color:#b9cbbd;text-decoration:none;font-size:13px;margin:5px 0}.copy{max-width:1150px;margin:30px auto 0;border-top:1px solid #ffffff1f;padding-top:15px;font-size:12px}
+@media(max-width:800px){.links{display:none}.hero-in,.story{grid-template-columns:1fr}.grid,.steps,.use-products{grid-template-columns:1fr}.features{grid-template-columns:1fr 1fr}.hero{min-height:auto}.visual{height:350px}.foot{grid-template-columns:1fr}}
+@media(max-width:500px){.features{grid-template-columns:1fr}section{padding:62px 18px}}
+
+/* Product quick-view popup */
+.product{cursor:pointer}.product:focus{outline:2px solid #286b43;outline-offset:3px}
+.product-modal{position:fixed;inset:0;background:rgba(20,32,24,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:9999}
+.product-modal.show{display:flex}
+.product-modal-box{width:min(520px,100%);max-height:92vh;overflow:auto;background:#fbfaf5;border-radius:26px;box-shadow:0 24px 80px rgba(0,0,0,.25);position:relative;padding:26px}
+.product-modal-close{position:absolute;right:15px;top:13px;border:0;background:white;width:40px;height:40px;border-radius:50%;font-size:24px;cursor:pointer;color:#245c3a}
+.modal-image{width:100%;height:260px;object-fit:cover;border-radius:18px;margin-bottom:18px}
+.modal-title{font-size:28px;margin:0 0 5px;color:#173c29}
+.modal-subtitle{color:#647067;margin:0 0 20px}
+.pack-options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px 0 20px}
+.pack-option{border:1.5px solid #d8ddcf;border-radius:15px;background:white;padding:15px;text-align:left;cursor:pointer}
+.pack-option.selected{border-color:#286b43;background:#eaf3e5}
+.pack-option strong{display:block;font-size:17px;color:#173c29}
+.pack-option span{display:block;margin-top:4px;color:#647067}
+.pack-option b{display:block;margin-top:10px;color:#286b43;font-size:13px}
+.pack-option.selected b{font-weight:800}
+
+.qty-row{display:flex;align-items:center;justify-content:space-between;margin:8px 0 20px}
+.qty-control{display:flex;align-items:center;border:1px solid #d8ddcf;border-radius:13px;background:white;overflow:hidden}
+.qty-control button{border:0;background:white;width:42px;height:42px;font-size:22px;cursor:pointer}
+.qty-control span{min-width:42px;text-align:center;font-weight:800}
+.modal-total{font-size:20px;font-weight:800;color:#173c29;margin-bottom:15px}
+.modal-add{width:100%;border:0;border-radius:15px;padding:15px;background:#286b43;color:white;font-size:17px;font-weight:800;cursor:pointer}
+@media(max-width:600px){.product-modal-box{padding:20px}.modal-image{height:220px}.pack-options{grid-template-columns:1fr}}
+
+
+.buy-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-buy{width:100%;border:0;border-radius:15px;padding:15px;background:#173c29;color:white;font-size:17px;font-weight:800;cursor:pointer}
+.checkout-box{max-width:520px}
+.checkout-summary{background:#eef5e9;border-radius:16px;padding:15px;margin:15px 0}
+.checkout-summary div{display:flex;justify-content:space-between;gap:15px;padding:7px 0;color:#647067}
+.checkout-summary strong{color:#173c29;text-align:right}
+#orderForm{display:grid;gap:10px}
+#orderForm input{width:100%;box-sizing:border-box;border:1px solid #d8ddcf;border-radius:13px;padding:14px;font:inherit;background:white}
+.checkout-note{font-size:12px;color:#7a837c;margin-top:12px}
+@media(max-width:600px){.buy-actions{grid-template-columns:1fr}}
+
+
+.cart-button{position:relative;border:0;background:#eef5e9;color:#173c29;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
+.cart-count{display:inline-flex;min-width:20px;height:20px;padding:0 5px;border-radius:20px;background:#286b43;color:white;align-items:center;justify-content:center;font-size:12px;margin-left:5px}
+.cart-drawer{position:fixed;inset:0;background:rgba(20,32,24,.55);display:none;z-index:10000}
+.cart-drawer.show{display:block}
+.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(430px,92%);background:#fbfaf5;padding:25px;box-sizing:border-box;box-shadow:-15px 0 50px rgba(0,0,0,.2);overflow:auto}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cart-head h2{margin:0;color:#173c29}
+.cart-close{border:0;background:white;border-radius:50%;width:40px;height:40px;font-size:24px;cursor:pointer}
+.cart-item{background:white;border:1px solid #e4e6dc;border-radius:16px;padding:14px;margin:10px 0}
+.cart-item-top{display:flex;gap:12px}
+.cart-item img{width:65px;height:65px;border-radius:10px;object-fit:cover}
+.cart-item-info{flex:1}
+.cart-item-info strong{display:block;color:#173c29}
+.cart-item-info small{color:#647067}
+.cart-item-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.cart-qty{display:flex;align-items:center;border:1px solid #d8ddcf;border-radius:10px;overflow:hidden}
+.cart-qty button{border:0;background:white;width:32px;height:32px;cursor:pointer;font-size:18px}
+.cart-qty span{min-width:30px;text-align:center;font-weight:800}
+.cart-remove{border:0;background:none;color:#a04438;cursor:pointer;font-size:12px}
+.cart-total{border-top:1px solid #ddd;margin-top:20px;padding-top:18px;display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:#173c29}
+.cart-checkout{width:100%;margin-top:15px;border:0;border-radius:15px;padding:15px;background:#286b43;color:white;font-size:17px;font-weight:800;cursor:pointer}
+.cart-empty{text-align:center;color:#647067;padding:50px 10px}
+@media(max-width:700px){.cart-button{padding:8px 10px}.cart-panel{width:94%}}
+
+
+.cart-button{border:0;background:#eef5e9;color:#173c29;border-radius:14px;padding:10px 15px;font-weight:800;cursor:pointer;white-space:nowrap}
+.cart-count{display:inline-flex;min-width:20px;height:20px;padding:0 5px;border-radius:20px;background:#286b43;color:#fff;align-items:center;justify-content:center;font-size:12px;margin-left:5px}
+.cart-drawer{position:fixed;inset:0;background:rgba(20,32,24,.55);display:none;z-index:10000}
+.cart-drawer.show{display:block}
+.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(430px,92vw);background:#fbfaf5;padding:25px;box-sizing:border-box;box-shadow:-15px 0 50px rgba(0,0,0,.2);overflow:auto}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cart-head h2{margin:0;color:#173c29}
+.cart-close{border:0;background:#fff;border-radius:50%;width:40px;height:40px;font-size:24px;cursor:pointer}
+.cart-item{background:#fff;border:1px solid #e4e6dc;border-radius:16px;padding:14px;margin:10px 0}
+.cart-item-top{display:flex;gap:12px}
+.cart-item img{width:65px;height:65px;border-radius:10px;object-fit:cover}
+.cart-item-info{flex:1}.cart-item-info strong{display:block;color:#173c29}.cart-item-info small{color:#647067}
+.cart-item-bottom{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-top:12px}
+.cart-qty{display:flex;align-items:center;border:1px solid #d8ddcf;border-radius:10px;overflow:hidden}
+.cart-qty button{border:0;background:#fff;width:32px;height:32px;cursor:pointer;font-size:18px}
+.cart-qty span{min-width:30px;text-align:center;font-weight:800}
+.cart-remove{border:0;background:none;color:#a04438;cursor:pointer;font-size:12px}
+.cart-total{border-top:1px solid #ddd;margin-top:20px;padding-top:18px;display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:#173c29}
+.cart-checkout{width:100%;margin-top:15px;border:0;border-radius:15px;padding:15px;background:#286b43;color:#fff;font-size:17px;font-weight:800;cursor:pointer}
+.cart-empty{text-align:center;color:#647067;padding:50px 10px}
+@media(max-width:800px){.cart-button{padding:8px 10px;font-size:13px}}
+
+
+.product-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.product-actions .btn{flex:1;min-width:120px;text-align:center}
+.btn.buy-now{background:#d78b32;color:#fff;border:0}
+.btn.buy-now:hover{filter:brightness(.95)}
+
+
+.product-card{cursor:pointer}
+.product-click-hint{display:inline-block;margin-top:14px;color:#286b43;font-size:14px;font-weight:800}
+.product-card:hover{transform:translateY(-3px)}
+
+.modal-actions{display:flex;gap:12px;margin-top:18px}
+.modal-actions button{flex:1}
+.btn.buy-now{background:#d78b32;color:#fff;border:0}
+@media(max-width:520px){.modal-actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav><div class="nav"><a class="logo" href="#products">Nutri<span>fasal</span></a><div class="links"><a href="#products">Products</a><a href="#how">How to Use</a><a href="#why">Why Us</a><a href="#story">Our Story</a><a href="#contact">Contact</a><a class="btn primary" href="#products">Shop Now</a></div></div></nav>
+
+<header class="hero"><div class="hero-in">
+<div><span class="badge">🌿 EVERYDAY KITCHEN NUTRITION</span>
+<h1>Nature's goodness in <em>every spoon.</em></h1>
+<p>Simple, natural powders made for everyday kitchens. Add a spoon to your favourite drinks, meals and recipes.</p>
+<div class="actions"><a class="btn primary" href="#products">Explore Products</a><a class="btn outline" href="#story">Discover Nutrifasal</a></div></div>
+<div class="visual"><div class="orbit"></div><div class="float f1">🌿 Moringa</div><div class="float f2">🇮🇳 PAN India Delivery</div><div class="bowl"><div><strong>1 Spoon</strong><small>EVERYDAY NUTRITION</small></div></div></div>
+</div><button class="cart-button" id="cartButton" type="button">🛒 Cart <span class="cart-count" id="cartCount">0</span></button></header>
+
+<section id="products" class="products"><div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Explore our everyday range of naturally inspired powders, made to fit easily into your favourite drinks, meals and recipes.</p></div>
+<div class="grid">
+<article class="product product-card"><div class="pic real"><img src="Moringa.jpeg" alt="Nutrifasal Moringa Leaf Powder"></div><div class="info"><h3>Moringa Leaf Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Moringa Leaf Powder</span></div></div><span class="product-click-hint">View product options →</span></article>
+<article class="product product-card"><div class="pic real"><img src="Beetroot.jpeg" alt="Nutrifasal Beetroot Powder"></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span></div></div><span class="product-click-hint">View product options →</span></article>
+<article class="product product-card"><div class="pic real"><img src="Banana.jpeg" alt="Nutrifasal Banana Powder"></div><div class="info"><h3>Banana Powder</h3><p>A convenient ingredient for smoothies, breakfasts and recipes.</p><div class="bottom"><span class="tag">🍌 Everyday Favourite</span></div></div><span class="product-click-hint">View product options →</span></article>
+</div></div></section>
+
+<section id="shop-direct" class="how"><div class="container">
+<div class="head"><div class="eyebrow">Shop Direct</div><h2>Buy directly from Nutrifasal</h2><p>Choose your favourite product and place your order directly through our website.</p></div>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><h3>Choose</h3><p>Select your favourite Nutrifasal powder.</p></div>
+<div class="step"><div class="step-num">2</div><h3>Add to Cart</h3><p>Add the product to your order.</p></div>
+<div class="step"><div class="step-num">3</div><h3>Checkout</h3><p>Enter your details and complete your order.</p></div>
+</div></div></section>
+
+<section id="how" class="how"><div class="container">
+<div class="head"><div class="eyebrow">How to Use</div><h2>Simple. One spoon. Easy to enjoy.</h2><p>Choose your product below to see simple ways to add it to your everyday food and drinks.</p></div>
+
+<div class="steps">
+<div class="step"><div class="step-num">1</div><h3>Choose</h3><p>Pick your favourite Nutrifasal powder.</p></div>
+<div class="step"><div class="step-num">2</div><h3>Add a Spoon</h3><p>Use a spoonful in your favourite food or drink.</p></div>
+<div class="step"><div class="step-num">3</div><h3>Enjoy</h3><p>Mix well and enjoy it as part of your routine.</p></div>
+</div>
+
+<div class="use-list">
+<details class="use-item" open>
+<summary>🌿 Moringa Leaf Powder <span>＋</span></summary>
+<div class="use-content"><p><strong>Try it in:</strong> smoothies, dal, soups, curries and everyday meals.</p><p><strong>Easy idea:</strong> Add a spoonful to a smoothie or mix into a finished meal.</p><a class="btn primary" href="#products">Add to Cart</a></div>
+</details>
+<details class="use-item">
+<summary>❤️ Beetroot Powder <span>＋</span></summary>
+<div class="use-content"><p><strong>Try it in:</strong> smoothies, drinks, yoghurt and recipes where you want natural beetroot colour and flavour.</p><p><strong>Easy idea:</strong> Mix a spoonful into a smoothie or your favourite drink.</p><a class="btn primary" href="#products">Add to Cart</a></div>
+</details>
+<details class="use-item">
+<summary>🍌 Banana Powder <span>＋</span></summary>
+<div class="use-content"><p><strong>Try it in:</strong> milkshakes, smoothies, breakfast bowls and recipes.</p><p><strong>Easy idea:</strong> Blend a spoonful into milk or a breakfast smoothie.</p><a class="btn primary" href="#products">Add to Cart</a></div>
+</details>
+</div>
+</div></section>
+
+<section id="why" class="why"><div class="container"><div class="head"><div class="eyebrow">Why Nutrifasal</div><h2>Simple nutrition. Simple routine.</h2></div><div class="features">
+<div class="feature"><div class="icon">🥄</div><h3>Easy to Use</h3><p>Designed around adding a spoon to everyday food and drinks.</p></div>
+<div class="feature"><div class="icon">🌿</div><h3>Plant-Based Range</h3><p>A collection inspired by familiar fruits, vegetables and leaves.</p></div>
+<div class="feature"><div class="icon">🇮🇳</div><h3>Made for India</h3><p>A brand experience built for Indian kitchens and customers.</p></div>
+<div class="feature"><div class="icon">🛒</div><h3>Shop Online</h3><p>Choose your pack size, quantity and place your order directly with Nutrifasal.</p></div>
+</div></div></section>
+
+<section id="story"><div class="container story"><div class="art"><div><h3>From nature<br>to your kitchen.</h3><p>Nutrifasal brings everyday ingredients into a convenient powder format.</p></div></div><div><div class="eyebrow">The Nutrifasal Idea</div><h2>Everyday nutrition shouldn't feel complicated.</h2><p>Nutrifasal is built around a simple idea: make natural, everyday nutrition easy to add to the food and drinks people already enjoy.</p><a class="btn primary" href="#products">View Products</a></div></div></section>
+
+<section id="contact" class="cta"><div class="container"><h2>Ready to add a little goodness?</h2><p>Explore Nutrifasal products and make everyday nutrition a little simpler.</p><a class="btn primary" href="#products">Shop Nutrifasal</a></div></section>
+
+<footer><div class="foot"><div><h3 class="logo" style="color:white">Nutri<span>fasal</span></h3><p>Everyday Kitchen Nutrition.</p><p>🌿 Moringa • 🍠 Beetroot • 🍌 Banana Powder</p></div><div><h3>Quick Links</h3><a href="#products">Products</a><a href="#why">Why Nutrifasal</a><a href="#story">Our Story</a></div><div><h3>Connect</h3><a href="https://www.instagram.com/nutrifasal/" target="_blank">Instagram</a><a href="#shop-direct">Shop Direct</a></div></div><div class="copy">© 2026 Nutrifasal. Demo website.</div></footer>
+
+<!-- Product Quick View -->
+<div class="product-modal" id="productModal" aria-hidden="true">
+  <div class="product-modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="product-modal-close" id="modalClose" aria-label="Close">×</button>
+    <img class="modal-image" id="modalImage" src="" alt="">
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <p class="modal-subtitle">Select your pack size, quantity and price.</p>
+
+    <div class="eyebrow">Choose your pack</div>
+    <div class="pack-options">
+      <button type="button" class="pack-option selected" data-pack="100 gm" data-price="0">
+        <strong>100 gm</strong><span class="pack-price">Price to be added</span><b>Choose 100 gm</b>
+      </button>
+      <button type="button" class="pack-option" data-pack="200 gm" data-price="0">
+        <strong>200 gm</strong><span class="pack-price">Price to be added</span><b>Choose 200 gm</b>
+      </button>
+      <button type="button" class="pack-option" data-pack="1000 gm" data-price="0">
+        <strong>1000 gm</strong><span class="pack-price">Price to be added</span><b>Choose 1000 gm</b>
+      </button>
+    </div>
+
+    <div class="qty-row">
+      <strong>Quantity</strong>
+      <div class="qty-control">
+        <button type="button" id="qtyMinus">−</button>
+        <span id="qtyValue">1</span>
+        <button type="button" id="qtyPlus">+</button>
+      </div>
+    </div>
+
+    <div class="modal-total" id="modalTotal">Price: ₹—</div>
+    <div class="buy-actions"><button class="modal-add" id="modalAdd">Add to Cart</button><button class="modal-buy" id="modalBuy">Buy Now</button></div>
+  </div>
+</div>
+
+
+
+
+<!-- Direct Purchase Checkout -->
+<div class="product-modal" id="checkoutModal" aria-hidden="true">
+  <div class="product-modal-box checkout-box" role="dialog" aria-modal="true">
+    <button class="product-modal-close" id="checkoutClose" aria-label="Close">×</button>
+    <div class="eyebrow">Secure Order</div>
+    <h2 class="modal-title">Complete Your Order</h2>
+    <p class="modal-subtitle" id="checkoutSummary">Product details</p>
+
+    <div class="checkout-summary">
+      <div><span>Product</span><strong id="checkoutProduct">—</strong></div>
+      <div><span>Pack</span><strong id="checkoutPack">—</strong></div>
+      <div><span>Quantity</span><strong id="checkoutQty">—</strong></div>
+      <div><span>Total</span><strong id="checkoutTotal">Price to be added</strong></div>
+    </div>
+
+    <form id="orderForm">
+      <input required name="name" placeholder="Full Name">
+      <input required name="phone" type="tel" placeholder="Mobile Number">
+      <input required name="address" placeholder="Delivery Address">
+      <input required name="city" placeholder="City">
+      <input required name="pincode" inputmode="numeric" placeholder="PIN Code">
+      <button class="modal-buy" type="submit">Place Order</button>
+    </form>
+    <p class="checkout-note">Payment can be connected here once the client confirms the preferred payment gateway.</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h2>Your Cart</h2>
+      <button class="cart-close" id="cartClose" type="button">×</button>
+    </div>
+    <div id="cartItems"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹—</span></div>
+    <button class="cart-checkout" id="cartCheckout" type="button">Proceed to Checkout</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const productModal = document.getElementById('productModal');
+  const checkoutModal = document.getElementById('checkoutModal');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartButton = document.getElementById('cartButton');
+  const cartClose = document.getElementById('cartClose');
+  const cartItems = document.getElementById('cartItems');
+  const cartCount = document.getElementById('cartCount');
+  const cartTotal = document.getElementById('cartTotal');
+  const cartCheckout = document.getElementById('cartCheckout');
+
+  const modalTitle = document.getElementById('modalTitle');
+  const modalImage = document.getElementById('modalImage');
+  const modalAdd = document.getElementById('modalAdd');
+  const modalBuy = document.getElementById('modalBuy');
+  const modalTotal = document.getElementById('modalTotal');
+  const qtyValue = document.getElementById('qtyValue');
+
+  let current = {product:'', image:'', pack:'100 gm', price:0, qty:1};
+  let cart = JSON.parse(localStorage.getItem('nutrifasalCart') || '[]');
+
+  const money = n => Number(n) > 0 ? '₹' + Number(n).toLocaleString('en-IN') : '₹—';
+  const save = () => localStorage.setItem('nutrifasalCart', JSON.stringify(cart));
+
+  function show(el){ if(el){ el.classList.add('show'); el.setAttribute('aria-hidden','false'); } }
+  function hide(el){ if(el){ el.classList.remove('show'); el.setAttribute('aria-hidden','true'); } }
+
+  function renderCart(){
+    cartCount.textContent = cart.reduce((a,i)=>a+Number(i.qty),0);
+    if(!cart.length){
+      cartItems.innerHTML = '<div class="cart-empty">Your cart is empty.<br><br>Click a product to choose a pack.</div>';
+      cartTotal.textContent = '₹—';
+      return;
+    }
+    let total=0, missing=false;
+    cartItems.innerHTML = cart.map((i,x)=>{
+      const line = Number(i.price)*Number(i.qty);
+      if(Number(i.price)>0) total += line; else missing=true;
+      return `<div class="cart-item">
+        <div class="cart-item-top">
+          <img src="${i.image}" alt="${i.product}">
+          <div class="cart-item-info"><strong>${i.product}</strong>
+          <small>${i.pack} · ${Number(i.price)>0?money(i.price):'Price to be added'}</small></div>
+        </div>
+        <div class="cart-item-bottom">
+          <div class="cart-qty">
+            <button type="button" data-action="minus" data-index="${x}">−</button>
+            <span>${i.qty}</span>
+            <button type="button" data-action="plus" data-index="${x}">+</button>
+          </div>
+          <strong>${Number(i.price)>0?money(line):'₹—'}</strong>
+          <button type="button" class="cart-remove" data-action="remove" data-index="${x}">Remove</button>
+        </div>
+      </div>`;
+    }).join('');
+    cartTotal.textContent = missing ? '₹—' : money(total);
+  }
+
+  function openProduct(card){
+    current.product = card.querySelector('h3')?.textContent.trim() || 'Nutrifasal Product';
+    const img = card.querySelector('img');
+    current.image = img ? img.getAttribute('src') : '';
+    current.pack = '100 gm';
+    current.qty = 1;
+
+    modalTitle.textContent = current.product;
+    modalImage.src = current.image;
+    qtyValue.textContent = '1';
+
+    const options = document.querySelectorAll('.pack-option');
+    options.forEach(o=>o.classList.remove('selected'));
+    const first = document.querySelector('.pack-option[data-pack="100 gm"]') || options[0];
+    if(first){
+      first.classList.add('selected');
+      current.pack = first.dataset.pack || '100 gm';
+      current.price = Number(first.dataset.price || 0);
+    } else {
+      current.price = 0;
+    }
+    modalTotal.textContent = 'Price: ' + money(current.price);
+    show(productModal);
+  }
+
+  // The whole product card is now clickable. Purchase buttons appear ONLY in the popup.
+  document.querySelectorAll('.product-card').forEach(card=>{
+    card.addEventListener('click', function(e){
+      if(e.target.closest('a')) e.preventDefault();
+      openProduct(card);
+    });
+  });
+
+  document.querySelectorAll('.pack-option').forEach(option=>{
+    option.addEventListener('click', function(){
+      document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
+      option.classList.add('selected');
+      current.pack = option.dataset.pack || '100 gm';
+      current.price = Number(option.dataset.price || 0);
+      modalTotal.textContent = 'Price: ' + money(current.price * current.qty);
+    });
+  });
+
+  document.getElementById('qtyMinus')?.addEventListener('click', function(){
+    if(current.qty>1){
+      current.qty--;
+      qtyValue.textContent=current.qty;
+      modalTotal.textContent='Price: '+money(current.price*current.qty);
+    }
+  });
+
+  document.getElementById('qtyPlus')?.addEventListener('click', function(){
+    current.qty++;
+    qtyValue.textContent=current.qty;
+    modalTotal.textContent='Price: '+money(current.price*current.qty);
+  });
+
+  function addCurrentToCart(){
+    const existing=cart.find(i=>i.product===current.product && i.pack===current.pack);
+    if(existing) existing.qty += current.qty;
+    else cart.push({...current});
+    save();
+    renderCart();
+  }
+
+  modalAdd?.addEventListener('click', function(){
+    addCurrentToCart();
+    modalAdd.textContent='Added ✓';
+    setTimeout(()=>modalAdd.textContent='Add to Cart',900);
+  });
+
+  function openCheckout(){
+    if(!cart.length){ alert('Your cart is empty.'); return; }
+    const p=document.getElementById('checkoutProduct');
+    const k=document.getElementById('checkoutPack');
+    const q=document.getElementById('checkoutQty');
+    const t=document.getElementById('checkoutTotal');
+    if(p) p.textContent=cart.map(i=>i.product+' — '+i.pack+' × '+i.qty).join(', ');
+    if(k) k.textContent=cart.length===1?cart[0].pack:'Multiple items';
+    if(q) q.textContent=cart.reduce((a,i)=>a+Number(i.qty),0);
+    const missing=cart.some(i=>Number(i.price)<=0);
+    const total=cart.reduce((a,i)=>a+Number(i.price)*Number(i.qty),0);
+    if(t) t.textContent=missing?'Price to be added':money(total);
+    hide(productModal);
+    hide(cartDrawer);
+    show(checkoutModal);
+  }
+
+  modalBuy?.addEventListener('click', function(){
+    addCurrentToCart();
+    openCheckout();
+  });
+
+  cartButton?.addEventListener('click', function(){ renderCart(); show(cartDrawer); });
+  cartClose?.addEventListener('click', ()=>hide(cartDrawer));
+  cartDrawer?.addEventListener('click', e=>{ if(e.target===cartDrawer) hide(cartDrawer); });
+  cartCheckout?.addEventListener('click', openCheckout);
+
+  cartItems?.addEventListener('click', function(e){
+    const b=e.target.closest('[data-action]');
+    if(!b) return;
+    const i=Number(b.dataset.index);
+    if(b.dataset.action==='plus') cart[i].qty++;
+    if(b.dataset.action==='minus'){ cart[i].qty--; if(cart[i].qty<=0) cart.splice(i,1); }
+    if(b.dataset.action==='remove') cart.splice(i,1);
+    save(); renderCart();
+  });
+
+  document.getElementById('modalClose')?.addEventListener('click', ()=>hide(productModal));
+  document.getElementById('checkoutClose')?.addEventListener('click', ()=>hide(checkoutModal));
+
+  productModal?.addEventListener('click', e=>{ if(e.target===productModal) hide(productModal); });
+  checkoutModal?.addEventListener('click', e=>{ if(e.target===checkoutModal) hide(checkoutModal); });
+
+  document.getElementById('orderForm')?.addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Order details captured. Payment integration can be added after prices are finalized.');
+  });
+
+  renderCart();
+});
+</script>
+
+</body></html>
