@@ -141,6 +141,12 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 .cart-empty{text-align:center;color:#647067;padding:50px 10px}
 @media(max-width:800px){.cart-button{padding:8px 10px;font-size:13px}}
 
+
+.product-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.product-actions .btn{flex:1;min-width:120px;text-align:center}
+.btn.buy-now{background:#d78b32;color:#fff;border:0}
+.btn.buy-now:hover{filter:brightness(.95)}
+
 </style>
 </head>
 <body>
@@ -156,9 +162,9 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 
 <section id="products" class="products"><div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Explore our everyday range of naturally inspired powders, made to fit easily into your favourite drinks, meals and recipes.</p></div>
 <div class="grid">
-<article class="product product-card"><div class="pic real"><img src="Moringa.jpeg" alt="Nutrifasal Moringa Leaf Powder"></div><div class="info"><h3>Moringa Leaf Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Moringa Leaf Powder</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
-<article class="product product-card"><div class="pic real"><img src="Beetroot.jpeg" alt="Nutrifasal Beetroot Powder"></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
-<article class="product product-card"><div class="pic real"><img src="Banana.jpeg" alt="Nutrifasal Banana Powder"></div><div class="info"><h3>Banana Powder</h3><p>A convenient ingredient for smoothies, breakfasts and recipes.</p><div class="bottom"><span class="tag">🍌 Everyday Favourite</span><a class="btn primary" href="#products">Add to Cart</a></div></div></article>
+<article class="product product-card"><div class="pic real"><img src="Moringa.jpeg" alt="Nutrifasal Moringa Leaf Powder"></div><div class="info"><h3>Moringa Leaf Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Moringa Leaf Powder</span><div class="product-actions"><a class="btn primary card-add-cart" href="#">Add to Cart</a><a class="btn buy-now card-buy-now" href="#">Buy Now</a></div></div></div></article>
+<article class="product product-card"><div class="pic real"><img src="Beetroot.jpeg" alt="Nutrifasal Beetroot Powder"></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span><div class="product-actions"><a class="btn primary card-add-cart" href="#">Add to Cart</a><a class="btn buy-now card-buy-now" href="#">Buy Now</a></div></div></div></article>
+<article class="product product-card"><div class="pic real"><img src="Banana.jpeg" alt="Nutrifasal Banana Powder"></div><div class="info"><h3>Banana Powder</h3><p>A convenient ingredient for smoothies, breakfasts and recipes.</p><div class="bottom"><span class="tag">🍌 Everyday Favourite</span><div class="product-actions"><a class="btn primary card-add-cart" href="#">Add to Cart</a><a class="btn buy-now card-buy-now" href="#">Buy Now</a></div></div></div></article>
 </div></div></section>
 
 <section id="shop-direct" class="how"><div class="container">
@@ -295,193 +301,160 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 
 
 
+
+
+
+
+
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const productModal = document.getElementById('productModal');
-  const checkoutModal = document.getElementById('checkoutModal');
-  const cartDrawer = document.getElementById('cartDrawer');
-  const cartButton = document.getElementById('cartButton');
-  const cartClose = document.getElementById('cartClose');
-  const cartItems = document.getElementById('cartItems');
-  const cartCount = document.getElementById('cartCount');
-  const cartTotal = document.getElementById('cartTotal');
-  const cartCheckout = document.getElementById('cartCheckout');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalImage = document.getElementById('modalImage');
-  const qtyValue = document.getElementById('qtyValue');
-  const modalTotal = document.getElementById('modalTotal');
-  const modalAdd = document.getElementById('modalAdd');
-  const modalBuy = document.getElementById('modalBuy');
+document.addEventListener('DOMContentLoaded', function(){
+  const productModal=document.getElementById('productModal');
+  const checkoutModal=document.getElementById('checkoutModal');
+  const cartDrawer=document.getElementById('cartDrawer');
+  const cartButton=document.getElementById('cartButton');
+  const cartClose=document.getElementById('cartClose');
+  const cartItems=document.getElementById('cartItems');
+  const cartCount=document.getElementById('cartCount');
+  const cartTotal=document.getElementById('cartTotal');
+  const cartCheckout=document.getElementById('cartCheckout');
 
-  let currentProduct = null;
-  let currentPack = '100 g';
-  let currentPrice = 0;
-  let currentQty = 1;
-  let cart = JSON.parse(localStorage.getItem('nutrifasalCart') || '[]');
+  const modalTitle=document.getElementById('modalTitle');
+  const modalImage=document.getElementById('modalImage');
+  const modalAdd=document.getElementById('modalAdd');
+  const modalBuy=document.getElementById('modalBuy');
+  const modalTotal=document.getElementById('modalTotal');
+  const qtyValue=document.getElementById('qtyValue');
 
-  function saveCart(){ localStorage.setItem('nutrifasalCart', JSON.stringify(cart)); }
+  let current={product:'',image:'',pack:'100 g',price:0,qty:1};
+  let cart=JSON.parse(localStorage.getItem('nutrifasalCart')||'[]');
 
-  function money(v){ return Number(v) > 0 ? '₹' + Number(v).toLocaleString('en-IN') : '₹—'; }
+  const money=n=>Number(n)>0?'₹'+Number(n).toLocaleString('en-IN'):'₹—';
+  const save=()=>localStorage.setItem('nutrifasalCart',JSON.stringify(cart));
+  function show(el){if(el){el.classList.add('show');el.setAttribute('aria-hidden','false');}}
+  function hide(el){if(el){el.classList.remove('show');el.setAttribute('aria-hidden','true');}}
 
   function renderCart(){
-    const count = cart.reduce((s,i)=>s + Number(i.qty), 0);
-    cartCount.textContent = count;
+    cartCount.textContent=cart.reduce((a,i)=>a+Number(i.qty),0);
     if(!cart.length){
-      cartItems.innerHTML = '<div class="cart-empty">Your cart is empty.<br><br>Choose a product to get started.</div>';
-      cartTotal.textContent = '₹—';
-      return;
+      cartItems.innerHTML='<div class="cart-empty">Your cart is empty.<br><br>Choose a product to get started.</div>';
+      cartTotal.textContent='₹—'; return;
     }
-    let total = 0, hasMissingPrice = false;
-    cartItems.innerHTML = cart.map((item,index)=>{
-      const line = Number(item.price) * Number(item.qty);
-      if(Number(item.price) > 0) total += line; else hasMissingPrice = true;
-      return `
-        <div class="cart-item">
-          <div class="cart-item-top">
-            <img src="${item.image}" alt="${item.product}">
-            <div class="cart-item-info">
-              <strong>${item.product}</strong>
-              <small>${item.pack} · ${Number(item.price)>0 ? money(item.price) : 'Price to be added'}</small>
-            </div>
-          </div>
-          <div class="cart-item-bottom">
-            <div class="cart-qty">
-              <button type="button" data-action="minus" data-index="${index}">−</button>
-              <span>${item.qty}</span>
-              <button type="button" data-action="plus" data-index="${index}">+</button>
-            </div>
-            <strong>${Number(item.price)>0 ? money(line) : '₹—'}</strong>
-            <button type="button" class="cart-remove" data-action="remove" data-index="${index}">Remove</button>
-          </div>
-        </div>`;
+    let total=0,missing=false;
+    cartItems.innerHTML=cart.map((i,x)=>{
+      const line=Number(i.price)*Number(i.qty);
+      if(Number(i.price)>0) total+=line; else missing=true;
+      return `<div class="cart-item"><div class="cart-item-top">
+        <img src="${i.image}" alt="${i.product}"><div class="cart-item-info">
+        <strong>${i.product}</strong><small>${i.pack} · ${Number(i.price)>0?money(i.price):'Price to be added'}</small></div></div>
+        <div class="cart-item-bottom"><div class="cart-qty">
+        <button data-action="minus" data-index="${x}" type="button">−</button><span>${i.qty}</span>
+        <button data-action="plus" data-index="${x}" type="button">+</button></div>
+        <strong>${Number(i.price)>0?money(line):'₹—'}</strong>
+        <button class="cart-remove" data-action="remove" data-index="${x}" type="button">Remove</button></div></div>`;
     }).join('');
-    cartTotal.textContent = hasMissingPrice ? '₹—' : money(total);
+    cartTotal.textContent=missing?'₹—':money(total);
   }
 
-  function openCart(){
-    renderCart();
-    cartDrawer.classList.add('show');
-    cartDrawer.setAttribute('aria-hidden','false');
-  }
-  function closeCart(){
-    cartDrawer.classList.remove('show');
-    cartDrawer.setAttribute('aria-hidden','true');
-  }
+  function openProduct(card,goCheckout){
+    current.product=card.querySelector('h3')?.textContent.trim()||'Nutrifasal Product';
+    const img=card.querySelector('img');
+    current.image=img?img.getAttribute('src'):'';
+    current.pack='100 g'; current.qty=1; current.price=0;
+    modalTitle.textContent=current.product;
+    modalImage.src=current.image;
+    qtyValue.textContent='1';
 
-  function openProduct(card){
-    currentProduct = card.dataset.product || card.querySelector('h3')?.textContent.trim() || 'Nutrifasal Product';
-    currentPack = '100 g';
-    currentPrice = 0;
-    currentQty = 1;
-    const img = card.querySelector('img');
-    modalTitle.textContent = currentProduct;
-    modalImage.src = img ? img.getAttribute('src') : '';
-    qtyValue.textContent = '1';
-    document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
-    const firstPack = document.querySelector('.pack-option[data-pack="100 g"]');
-    if(firstPack){ firstPack.classList.add('selected'); currentPrice = Number(firstPack.dataset.price || 0); }
-    modalTotal.textContent = money(currentPrice * currentQty);
-    productModal.classList.add('show');
-    productModal.setAttribute('aria-hidden','false');
-  }
-
-  document.querySelectorAll('.product-card').forEach(card=>{
-    card.addEventListener('click', function(e){
-      const target = e.target.closest('a.btn.primary');
-      if(target){ e.preventDefault(); e.stopPropagation(); }
-      if(target || e.target.closest('.product-card-image')) openProduct(card);
-    });
-  });
-
-  document.querySelectorAll('.pack-option').forEach(option=>{
-    option.addEventListener('click', function(){
-      document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
-      option.classList.add('selected');
-      currentPack = option.dataset.pack || '100 g';
-      currentPrice = Number(option.dataset.price || 0);
-      modalTotal.textContent = money(currentPrice * currentQty);
-    });
-  });
-
-  const minus = document.getElementById('qtyMinus');
-  const plus = document.getElementById('qtyPlus');
-  if(minus) minus.addEventListener('click', function(){ if(currentQty>1){currentQty--;qtyValue.textContent=currentQty;modalTotal.textContent=money(currentPrice*currentQty);} });
-  if(plus) plus.addEventListener('click', function(){ currentQty++;qtyValue.textContent=currentQty;modalTotal.textContent=money(currentPrice*currentQty); });
-
-  function addCurrentToCart(){
-    const image = modalImage.getAttribute('src') || '';
-    const existing = cart.find(i=>i.product===currentProduct && i.pack===currentPack);
-    if(existing) existing.qty += currentQty;
-    else cart.push({product:currentProduct, pack:currentPack, price:currentPrice, qty:currentQty, image:image});
-    saveCart(); renderCart();
-  }
-
-  if(modalAdd) modalAdd.addEventListener('click', function(){
-    addCurrentToCart();
-    modalAdd.textContent='Added ✓';
-    setTimeout(()=>modalAdd.textContent='Add to Cart',1000);
-  });
-
-  if(modalBuy) modalBuy.addEventListener('click', function(){
-    addCurrentToCart();
-    productModal.classList.remove('show');
-    if(cartCheckout) cartCheckout.click();
-  });
-
-  if(cartButton) cartButton.addEventListener('click', openCart);
-  if(cartClose) cartClose.addEventListener('click', closeCart);
-  if(cartDrawer) cartDrawer.addEventListener('click', e=>{if(e.target===cartDrawer)closeCart();});
-
-  cartItems.addEventListener('click', function(e){
-    const btn=e.target.closest('[data-action]');
-    if(!btn)return;
-    const i=Number(btn.dataset.index);
-    if(btn.dataset.action==='plus') cart[i].qty++;
-    if(btn.dataset.action==='minus'){cart[i].qty--; if(cart[i].qty<=0) cart.splice(i,1);}
-    if(btn.dataset.action==='remove') cart.splice(i,1);
-    saveCart(); renderCart();
-  });
-
-  if(cartCheckout) cartCheckout.addEventListener('click', function(){
-    if(!cart.length){ alert('Your cart is empty.'); return; }
-    closeCart();
-    if(checkoutModal){
-      const summary = cart.map(i=>`${i.product} — ${i.pack} × ${i.qty}`).join(' | ');
-      const cp=document.getElementById('checkoutProduct');
-      const ck=document.getElementById('checkoutPack');
-      const cq=document.getElementById('checkoutQty');
-      const ct=document.getElementById('checkoutTotal');
-      if(cp) cp.value=summary;
-      if(ck) ck.value='Multiple items';
-      if(cq) cq.value=cart.reduce((s,i)=>s+i.qty,0);
-      const hasMissing=cart.some(i=>Number(i.price)<=0);
-      const total=cart.reduce((s,i)=>s+(Number(i.price)*i.qty),0);
-      if(ct) ct.value=hasMissing ? 'Price to be added' : money(total);
-      checkoutModal.classList.add('show');
-      checkoutModal.setAttribute('aria-hidden','false');
+    const opts=document.querySelectorAll('.pack-option');
+    opts.forEach(o=>o.classList.remove('selected'));
+    const first=document.querySelector('.pack-option[data-pack="100 g"]')||opts[0];
+    if(first){
+      first.classList.add('selected');
+      current.pack=first.dataset.pack||'100 g';
+      current.price=Number(first.dataset.price||0);
     }
+    modalTotal.textContent='Price: '+money(current.price);
+    show(productModal);
+    productModal.dataset.buyAfterSelect=goCheckout?'true':'false';
+  }
+
+  // IMPORTANT: attach handlers directly to the actual buttons now present in each card.
+  document.querySelectorAll('.product-card').forEach(card=>{
+    const add=card.querySelector('.card-add-cart');
+    const buy=card.querySelector('.card-buy-now');
+    if(add) add.addEventListener('click',e=>{e.preventDefault();openProduct(card,false);});
+    if(buy) buy.addEventListener('click',e=>{e.preventDefault();openProduct(card,true);});
   });
 
-  // Close buttons for existing modals.
-  document.querySelectorAll('[data-close], .modal-close').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      const m=btn.closest('.modal');
-      if(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}
-    });
+  document.querySelectorAll('.pack-option').forEach(o=>o.addEventListener('click',()=>{
+    document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
+    o.classList.add('selected');
+    current.pack=o.dataset.pack||'100 g';
+    current.price=Number(o.dataset.price||0);
+    modalTotal.textContent='Price: '+money(current.price*current.qty);
+  }));
+
+  document.getElementById('qtyMinus')?.addEventListener('click',()=>{
+    if(current.qty>1){current.qty--;qtyValue.textContent=current.qty;modalTotal.textContent='Price: '+money(current.price*current.qty);}
   });
-  [productModal,checkoutModal].forEach(m=>{
-    if(m) m.addEventListener('click',e=>{if(e.target===m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}});
+  document.getElementById('qtyPlus')?.addEventListener('click',()=>{
+    current.qty++;qtyValue.textContent=current.qty;modalTotal.textContent='Price: '+money(current.price*current.qty);
   });
 
-  // Checkout form: keep it as a customer-details capture step for now.
-  const orderForm=document.getElementById('orderForm');
-  if(orderForm) orderForm.addEventListener('submit', function(e){
+  function addCurrent(){
+    const old=cart.find(i=>i.product===current.product&&i.pack===current.pack);
+    if(old) old.qty+=current.qty;
+    else cart.push({...current});
+    save();renderCart();
+  }
+
+  modalAdd?.addEventListener('click',()=>{
+    addCurrent();
+    modalAdd.textContent='Added ✓';
+    setTimeout(()=>modalAdd.textContent='Add to Cart',900);
+  });
+
+  function checkout(){
+    if(!cart.length){alert('Your cart is empty.');return;}
+    const p=document.getElementById('checkoutProduct');
+    const k=document.getElementById('checkoutPack');
+    const q=document.getElementById('checkoutQty');
+    const t=document.getElementById('checkoutTotal');
+    if(p)p.textContent=cart.map(i=>i.product+' — '+i.pack).join(', ');
+    if(k)k.textContent=cart.length===1?cart[0].pack:'Multiple items';
+    if(q)q.textContent=cart.reduce((a,i)=>a+Number(i.qty),0);
+    const missing=cart.some(i=>Number(i.price)<=0);
+    const total=cart.reduce((a,i)=>a+Number(i.price)*Number(i.qty),0);
+    if(t)t.textContent=missing?'Price to be added':money(total);
+    hide(productModal);hide(cartDrawer);show(checkoutModal);
+  }
+
+  modalBuy?.addEventListener('click',()=>{addCurrent();checkout();});
+  cartButton?.addEventListener('click',()=>{renderCart();show(cartDrawer);});
+  cartClose?.addEventListener('click',()=>hide(cartDrawer));
+  cartDrawer?.addEventListener('click',e=>{if(e.target===cartDrawer)hide(cartDrawer);});
+  cartCheckout?.addEventListener('click',checkout);
+
+  cartItems?.addEventListener('click',e=>{
+    const b=e.target.closest('[data-action]'); if(!b)return;
+    const i=Number(b.dataset.index);
+    if(b.dataset.action==='plus')cart[i].qty++;
+    if(b.dataset.action==='minus'){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1);}
+    if(b.dataset.action==='remove')cart.splice(i,1);
+    save();renderCart();
+  });
+
+  document.getElementById('modalClose')?.addEventListener('click',()=>hide(productModal));
+  document.getElementById('checkoutClose')?.addEventListener('click',()=>hide(checkoutModal));
+  productModal?.addEventListener('click',e=>{if(e.target===productModal)hide(productModal);});
+  checkoutModal?.addEventListener('click',e=>{if(e.target===checkoutModal)hide(checkoutModal);});
+
+  document.getElementById('orderForm')?.addEventListener('submit',e=>{
     e.preventDefault();
-    alert('Order details captured. Payment integration can be connected once prices and payment method are finalized.');
+    alert('Order details captured. Payment integration can be added after prices are finalized.');
   });
 
   renderCart();
 });
 </script>
-
 </body></html>
