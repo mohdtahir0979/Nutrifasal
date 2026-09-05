@@ -232,14 +232,14 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 
     <div class="eyebrow">Choose your pack</div>
     <div class="pack-options">
-      <button type="button" class="pack-option selected" data-pack="100 g" data-price="0">
-        <strong>100 g</strong><span class="pack-price">Price to be added</span><b>Choose 100 g</b>
+      <button type="button" class="pack-option selected" data-pack="100 gm" data-price="0">
+        <strong>100 gm</strong><span class="pack-price">Price to be added</span><b>Choose 100 gm</b>
       </button>
-      <button type="button" class="pack-option" data-pack="200 g" data-price="0">
-        <strong>200 g</strong><span class="pack-price">Price to be added</span><b>Choose 200 g</b>
+      <button type="button" class="pack-option" data-pack="200 gm" data-price="0">
+        <strong>200 gm</strong><span class="pack-price">Price to be added</span><b>Choose 200 gm</b>
       </button>
-      <button type="button" class="pack-option" data-pack="1000 g" data-price="0">
-        <strong>1000 g</strong><span class="pack-price">Price to be added</span><b>Choose 1000 g</b>
+      <button type="button" class="pack-option" data-pack="1000 gm" data-price="0">
+        <strong>1000 gm</strong><span class="pack-price">Price to be added</span><b>Choose 1000 gm</b>
       </button>
     </div>
 
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const modalTotal = document.getElementById('modalTotal');
   const qtyValue = document.getElementById('qtyValue');
 
-  let current = {product:'', image:'', pack:'100 g', price:0, qty:1};
+  let current = {product:'', image:'', pack:'100 gm', price:0, qty:1};
   let cart = JSON.parse(localStorage.getItem('nutrifasalCart') || '[]');
 
   const money = n => Number(n) > 0 ? '₹' + Number(n).toLocaleString('en-IN') : '₹—';
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function () {
     current.product = card.querySelector('h3')?.textContent.trim() || 'Nutrifasal Product';
     const img = card.querySelector('img');
     current.image = img ? img.getAttribute('src') : '';
-    current.pack = '100 g';
+    current.pack = '100 gm';
     current.qty = 1;
 
     modalTitle.textContent = current.product;
@@ -390,10 +390,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const options = document.querySelectorAll('.pack-option');
     options.forEach(o=>o.classList.remove('selected'));
-    const first = document.querySelector('.pack-option[data-pack="100 g"]') || options[0];
+    const first = document.querySelector('.pack-option[data-pack="100 gm"]') || options[0];
     if(first){
       first.classList.add('selected');
-      current.pack = first.dataset.pack || '100 g';
+      current.pack = first.dataset.pack || '100 gm';
       current.price = Number(first.dataset.price || 0);
     } else {
       current.price = 0;
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function () {
     option.addEventListener('click', function(){
       document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
       option.classList.add('selected');
-      current.pack = option.dataset.pack || '100 g';
+      current.pack = option.dataset.pack || '100 gm';
       current.price = Number(option.dataset.price || 0);
       modalTotal.textContent = 'Price: ' + money(current.price * current.qty);
     });
