@@ -93,6 +93,31 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 .checkout-note{font-size:12px;color:#7a837c;margin-top:12px}
 @media(max-width:600px){.buy-actions{grid-template-columns:1fr}}
 
+
+.cart-button{position:relative;border:0;background:#eef5e9;color:#173c29;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer}
+.cart-count{display:inline-flex;min-width:20px;height:20px;padding:0 5px;border-radius:20px;background:#286b43;color:white;align-items:center;justify-content:center;font-size:12px;margin-left:5px}
+.cart-drawer{position:fixed;inset:0;background:rgba(20,32,24,.55);display:none;z-index:10000}
+.cart-drawer.show{display:block}
+.cart-panel{position:absolute;right:0;top:0;height:100%;width:min(430px,92%);background:#fbfaf5;padding:25px;box-sizing:border-box;box-shadow:-15px 0 50px rgba(0,0,0,.2);overflow:auto}
+.cart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cart-head h2{margin:0;color:#173c29}
+.cart-close{border:0;background:white;border-radius:50%;width:40px;height:40px;font-size:24px;cursor:pointer}
+.cart-item{background:white;border:1px solid #e4e6dc;border-radius:16px;padding:14px;margin:10px 0}
+.cart-item-top{display:flex;gap:12px}
+.cart-item img{width:65px;height:65px;border-radius:10px;object-fit:cover}
+.cart-item-info{flex:1}
+.cart-item-info strong{display:block;color:#173c29}
+.cart-item-info small{color:#647067}
+.cart-item-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.cart-qty{display:flex;align-items:center;border:1px solid #d8ddcf;border-radius:10px;overflow:hidden}
+.cart-qty button{border:0;background:white;width:32px;height:32px;cursor:pointer;font-size:18px}
+.cart-qty span{min-width:30px;text-align:center;font-weight:800}
+.cart-remove{border:0;background:none;color:#a04438;cursor:pointer;font-size:12px}
+.cart-total{border-top:1px solid #ddd;margin-top:20px;padding-top:18px;display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:#173c29}
+.cart-checkout{width:100%;margin-top:15px;border:0;border-radius:15px;padding:15px;background:#286b43;color:white;font-size:17px;font-weight:800;cursor:pointer}
+.cart-empty{text-align:center;color:#647067;padding:50px 10px}
+@media(max-width:700px){.cart-button{padding:8px 10px}.cart-panel{width:94%}}
+
 </style>
 </head>
 <body>
@@ -104,7 +129,7 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 <p>Simple, natural powders made for everyday kitchens. Add a spoon to your favourite drinks, meals and recipes.</p>
 <div class="actions"><a class="btn primary" href="#products">Explore Products</a><a class="btn outline" href="#story">Discover Nutrifasal</a></div></div>
 <div class="visual"><div class="orbit"></div><div class="float f1">🌿 Moringa</div><div class="float f2">🇮🇳 PAN India Delivery</div><div class="bowl"><div><strong>1 Spoon</strong><small>EVERYDAY NUTRITION</small></div></div></div>
-</div></header>
+</div><button class="cart-button" id="cartButton" type="button">🛒 Cart <span class="cart-count" id="cartCount">0</span></button></header>
 
 <section id="products" class="products"><div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Explore our everyday range of naturally inspired powders, made to fit easily into your favourite drinks, meals and recipes.</p></div>
 <div class="grid">
@@ -303,6 +328,9 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
   document.getElementById('modalClose').onclick = closeProduct;
 
   addBtn.onclick = function(){
+    window.dispatchEvent(new CustomEvent('nutrifasal-product-added', {
+      detail:{product:product, pack:pack, price:price, qty:qty, image:image.src}
+    }));
     addBtn.textContent = 'Added ✓';
     setTimeout(function(){ addBtn.textContent = 'Add to Cart'; }, 1200);
   };
@@ -342,6 +370,94 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
       closeCheckout();
     }
   });
+})();
+</script>
+
+
+<div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-panel">
+    <div class="cart-head">
+      <h2>Your Cart</h2>
+      <button class="cart-close" id="cartClose" type="button">×</button>
+    </div>
+    <div id="cartItems"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹—</span></div>
+    <button class="cart-checkout" id="cartCheckout" type="button">Proceed to Checkout</button>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  const cart = [];
+  const drawer = document.getElementById('cartDrawer');
+  const cartButton = document.getElementById('cartButton');
+  const cartClose = document.getElementById('cartClose');
+  const cartItems = document.getElementById('cartItems');
+  const cartCount = document.getElementById('cartCount');
+  const cartTotal = document.getElementById('cartTotal');
+  const cartCheckout = document.getElementById('cartCheckout');
+
+  function renderCart(){
+    const count = cart.reduce((s,i)=>s+i.qty,0);
+    cartCount.textContent = count;
+    if(!cart.length){
+      cartItems.innerHTML = '<div class="cart-empty">Your cart is empty.<br><br>Select a product and click <strong>Add to Cart</strong>.</div>';
+      cartTotal.textContent = '₹—';
+      return;
+    }
+    let total = 0;
+    cartItems.innerHTML = cart.map((item,index)=>{
+      const itemTotal = item.price * item.qty;
+      total += itemTotal;
+      return '<div class="cart-item"><div class="cart-item-top">' +
+        '<img src="'+item.image+'" alt="'+item.product+'">' +
+        '<div class="cart-item-info"><strong>'+item.product+'</strong><small>'+item.pack+' · '+(item.price>0?'₹'+item.price:'Price to be added')+'</small></div></div>' +
+        '<div class="cart-item-bottom"><div class="cart-qty"><button data-action="minus" data-index="'+index+'">−</button><span>'+item.qty+'</span><button data-action="plus" data-index="'+index+'">+</button></div>' +
+        '<strong>'+(item.price>0?'₹'+itemTotal:'₹—')+'</strong><button class="cart-remove" data-action="remove" data-index="'+index+'">Remove</button></div></div>';
+    }).join('');
+    cartTotal.textContent = total > 0 ? '₹'+total : '₹—';
+  }
+
+  window.nutrifasalAddToCart = function(product, pack, price, qty, image){
+    const existing = cart.find(i=>i.product===product && i.pack===pack);
+    if(existing) existing.qty += qty;
+    else cart.push({product,pack,price,qty,image});
+    renderCart();
+    drawer.classList.add('show');
+    drawer.setAttribute('aria-hidden','false');
+  };
+
+  cartButton.addEventListener('click',()=>{renderCart();drawer.classList.add('show');drawer.setAttribute('aria-hidden','false');});
+  cartClose.addEventListener('click',()=>{drawer.classList.remove('show');drawer.setAttribute('aria-hidden','true');});
+  drawer.addEventListener('click',e=>{if(e.target===drawer){drawer.classList.remove('show');drawer.setAttribute('aria-hidden','true');}});
+
+  cartItems.addEventListener('click',function(e){
+    const b=e.target.closest('[data-action]');
+    if(!b)return;
+    const i=Number(b.dataset.index);
+    if(b.dataset.action==='plus') cart[i].qty++;
+    if(b.dataset.action==='minus'){cart[i].qty--;if(cart[i].qty<1)cart.splice(i,1);}
+    if(b.dataset.action==='remove') cart.splice(i,1);
+    renderCart();
+  });
+
+  cartCheckout.addEventListener('click',function(){
+    drawer.classList.remove('show');
+    drawer.setAttribute('aria-hidden','true');
+    const checkout=document.getElementById('checkoutModal');
+    if(checkout){
+      checkout.classList.add('show');
+      checkout.setAttribute('aria-hidden','false');
+    }
+  });
+
+  window.addEventListener('nutrifasal-product-added',function(e){
+    const d=e.detail;
+    window.nutrifasalAddToCart(d.product,d.pack,d.price,d.qty,d.image);
+  });
+
+  renderCart();
 })();
 </script>
 
