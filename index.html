@@ -216,10 +216,34 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
   color:white;font-size:16px;font-weight:800;cursor:pointer
 }
 
+
+.trust-section{padding:65px 20px;background:#f3f6ed}.trust-grid{max-width:1100px;margin:28px auto;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.trust-card{background:#fff;border:1px solid #e2e8da;border-radius:18px;padding:24px;text-align:center}.trust-icon{font-size:30px}.trust-card h3{color:#173c29;margin:8px 0}.trust-card p{color:#647067;font-size:14px;margin:0}.faq-section{padding:65px 20px;background:#fbfaf5}.faq-wrap{max-width:900px;margin:28px auto}.faq-item{background:#fff;border:1px solid #e1e6da;border-radius:14px;margin:12px 0}.faq-item summary{cursor:pointer;padding:18px;font-weight:800;color:#173c29;list-style:none}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary:after{content:'+';float:right}.faq-item[open] summary:after{content:'−'}.faq-answer{padding:0 18px 18px;color:#647067;line-height:1.6}.product-info-extra{margin-top:18px;padding-top:16px;border-top:1px solid #e3e6dd}.product-info-extra h4{margin:11px 0 5px;color:#173c29}.product-info-extra p{margin:0;color:#647067;font-size:14px;line-height:1.5}@media(max-width:850px){.trust-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.trust-grid{grid-template-columns:1fr}}
+
+/* Enhanced product experience */
+.product-search{max-width:520px;margin:18px auto 28px;display:flex;gap:8px}
+.product-search input{width:100%;padding:14px 18px;border:1px solid #dce3d5;border-radius:14px;background:#fff;font-size:15px;outline:none}
+.product-search input:focus{border-color:#286b43;box-shadow:0 0 0 3px rgba(40,107,67,.08)}
+.product-card.is-hidden{display:none}
+.product-panel-badge{display:inline-block;background:#e6f2df;color:#286b43;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;margin-bottom:10px}
+.product-panel-divider{height:1px;background:#e4e7df;margin:18px 0}
+.product-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.product-benefit{background:#f2f6ed;border-radius:12px;padding:11px 7px;text-align:center;font-size:12px;font-weight:700;color:#31543f}
+@media(max-width:520px){.product-benefits{grid-template-columns:1fr 1fr 1fr}.product-search{margin-left:10px;margin-right:10px}}
+
+
+.product-detail-tabs{margin-top:22px;border-top:1px solid #e2e6dd;padding-top:8px}
+.product-detail-tabs details{border-bottom:1px solid #e2e6dd}
+.product-detail-tabs summary{cursor:pointer;list-style:none;padding:16px 4px;font-weight:800;color:#173c29}
+.product-detail-tabs summary::-webkit-details-marker{display:none}
+.product-detail-tabs summary:after{content:'+';float:right;font-size:20px}
+.product-detail-tabs details[open] summary:after{content:'−'}
+.product-detail-content{padding:0 4px 17px;color:#647067;line-height:1.65;font-size:14px}
+.product-detail-content ul{margin:8px 0 0 18px;padding:0}
+.product-detail-content li{margin:5px 0}
 </style>
 </head>
 <body>
-<nav><div class="nav"><a class="logo" href="#products">Nutri<span>fasal</span></a><div class="links"><a href="#products">Products</a><a href="#how">How to Use</a><a href="#why">Why Us</a><a href="#story">Our Story</a><a href="#contact">Contact</a><a class="btn primary" href="#products">Shop Now</a></div></div></nav>
+<nav><div class="nav"><a class="logo" href="#products">Nutri<span>fasal</span></a><div class="links"><a href="#products">Products</a><a href="#how">How to Use</a><a href="#why">Why Us</a><a href="#story">Our Story</a><a href="#faq">FAQ</a><a href="#contact">Contact</a><a class="btn primary" href="#products">Shop Now</a></div></div></nav>
 
 <header class="hero"><div class="hero-in">
 <div><span class="badge">🌿 EVERYDAY KITCHEN NUTRITION</span>
@@ -229,7 +253,11 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 <div class="visual"><div class="orbit"></div><div class="float f1">🌿 Moringa</div><div class="float f2">🇮🇳 PAN India Delivery</div><div class="bowl"><div><strong>1 Spoon</strong><small>EVERYDAY NUTRITION</small></div></div></div>
 </div><button class="cart-button" id="cartButton" type="button">🛒 Cart <span class="cart-count" id="cartCount">0</span></button></header>
 
-<section id="products" class="products"><div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Explore our everyday range of naturally inspired powders, made to fit easily into your favourite drinks, meals and recipes.</p></div>
+<section id="products" class="products">
+<div class="product-search">
+  <input id="productSearch" type="search" placeholder="Search Moringa, Beetroot or Banana..." aria-label="Search products">
+</div>
+<div class="container"><div class="head"><div class="eyebrow">Our Collection</div><h2>Goodness for your everyday kitchen</h2><p>Explore our everyday range of naturally inspired powders, made to fit easily into your favourite drinks, meals and recipes.</p></div>
 <div class="grid">
 <article class="product product-card"><div class="pic real"><img src="Moringa.jpeg" alt="Nutrifasal Moringa Leaf Powder"></div><div class="info"><h3>Moringa Leaf Powder</h3><p>A versatile everyday powder for drinks, meals and recipes.</p><div class="bottom"><span class="tag">🌿 Moringa Leaf Powder</span></div></div><span class="product-click-hint">View product options →</span><span class="product-click-label">View product details →</span></article>
 <article class="product product-card"><div class="pic real"><img src="Beetroot.jpeg" alt="Nutrifasal Beetroot Powder"></div><div class="info"><h3>Beetroot Powder</h3><p>A naturally vibrant powder for everyday recipes and drinks.</p><div class="bottom"><span class="tag">❤️ Naturally Vibrant</span></div></div><span class="product-click-hint">View product options →</span><span class="product-click-label">View product details →</span></article>
@@ -292,14 +320,14 @@ footer{background:#12261a;color:#b9cbbd;padding:42px 22px 18px}.foot{max-width:1
 
     <div class="eyebrow">Choose your pack</div>
     <div class="pack-options">
-      <button type="button" class="pack-option selected" data-pack="100 g" data-price="0">
-        <strong>100 g</strong><span class="pack-price">Price to be added</span><b>Choose 100 g</b>
+      <button type="button" class="pack-option selected" data-pack="100 gm" data-price="0">
+        <strong>100 gm</strong><span class="pack-price">Price to be added</span><b>Choose 100 gm</b>
       </button>
-      <button type="button" class="pack-option" data-pack="200 g" data-price="0">
-        <strong>200 g</strong><span class="pack-price">Price to be added</span><b>Choose 200 g</b>
+      <button type="button" class="pack-option" data-pack="200 gm" data-price="0">
+        <strong>200 gm</strong><span class="pack-price">Price to be added</span><b>Choose 200 gm</b>
       </button>
-      <button type="button" class="pack-option" data-pack="1000 g" data-price="0">
-        <strong>1000 g</strong><span class="pack-price">Price to be added</span><b>Choose 1000 g</b>
+      <button type="button" class="pack-option" data-pack="1000 gm" data-price="0">
+        <strong>1000 gm</strong><span class="pack-price">Price to be added</span><b>Choose 1000 gm</b>
       </button>
     </div>
 
@@ -397,8 +425,40 @@ document.addEventListener('DOMContentLoaded', function () {
   const modalTotal = document.getElementById('modalTotal');
   const qtyValue = document.getElementById('qtyValue');
 
-  let current = {product:'', image:'', pack:'100 g', price:0, qty:1};
+  let current = {product:'', image:'', pack:'100 gm', price:0, qty:1};
   let cart = JSON.parse(localStorage.getItem('nutrifasalCart') || '[]');
+  const productDetails = {
+    "Moringa Leaf Powder": {
+      overview: "A convenient way to add moringa leaf powder to everyday meals and drinks.",
+      description: "Nutrifasal Moringa Leaf Powder is made from moringa leaves and is designed for simple everyday use. Add it to smoothies, drinks or suitable recipes according to your preference.",
+      benefits: ["Moringa leaf powder in an easy-to-use format", "Convenient for smoothies, drinks and recipes", "Available in 100 gm, 200 gm and 1000 gm packs", "Securely packaged for delivery"]
+    },
+    "Beetroot Powder": {
+      overview: "A convenient beetroot powder for adding beetroot to everyday recipes and drinks.",
+      description: "Nutrifasal Beetroot Powder is made for convenient everyday kitchen use. Add it to smoothies, drinks, doughs or suitable recipes according to your preference.",
+      benefits: ["Easy-to-use beetroot powder", "Convenient for drinks, smoothies and recipes", "Available in 100 gm, 200 gm and 1000 gm packs", "Securely packaged for delivery"]
+    },
+    "Banana Powder": {
+      overview: "A convenient banana powder for everyday recipes, drinks and food preparation.",
+      description: "Nutrifasal Banana Powder is designed for convenient kitchen use. Add it to smoothies, shakes, desserts or suitable recipes according to your preference.",
+      benefits: ["Easy-to-use banana powder", "Convenient for smoothies, shakes and recipes", "Available in 100 gm, 200 gm and 1000 gm packs", "Securely packaged for delivery"]
+    }
+  };
+
+  function updateProductDetails(name){
+    const d = productDetails[name] || {
+      overview: "A convenient Nutrifasal kitchen powder for everyday use.",
+      description: "Designed to be easy to add to suitable drinks, meals and recipes.",
+      benefits: ["Convenient powder format", "Easy to add to recipes", "Available in 100 gm, 200 gm and 1000 gm packs", "Securely packaged for delivery"]
+    };
+    const ov=document.getElementById('detailOverview');
+    const de=document.getElementById('detailDescription');
+    const be=document.getElementById('detailBenefits');
+    if(ov) ov.textContent=d.overview;
+    if(de) de.textContent=d.description;
+    if(be) be.innerHTML='<ul>'+d.benefits.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+  }
+
 
   const money = n => Number(n) > 0 ? '₹' + Number(n).toLocaleString('en-IN') : '₹—';
   const save = () => localStorage.setItem('nutrifasalCart', JSON.stringify(cart));
@@ -441,19 +501,20 @@ document.addEventListener('DOMContentLoaded', function () {
     current.product = card.querySelector('h3')?.textContent.trim() || 'Nutrifasal Product';
     const img = card.querySelector('img');
     current.image = img ? img.getAttribute('src') : '';
-    current.pack = '100 g';
+    current.pack = '100 gm';
     current.qty = 1;
 
     modalTitle.textContent = current.product;
+    updateProductDetails(current.product);
     modalImage.src = current.image;
     qtyValue.textContent = '1';
 
     const options = document.querySelectorAll('.pack-option');
     options.forEach(o=>o.classList.remove('selected'));
-    const first = document.querySelector('.pack-option[data-pack="100 g"]') || options[0];
+    const first = document.querySelector('.pack-option[data-pack="100 gm"]') || options[0];
     if(first){
       first.classList.add('selected');
-      current.pack = first.dataset.pack || '100 g';
+      current.pack = first.dataset.pack || '100 gm';
       current.price = Number(first.dataset.price || 0);
     } else {
       current.price = 0;
@@ -474,7 +535,7 @@ document.addEventListener('DOMContentLoaded', function () {
     option.addEventListener('click', function(){
       document.querySelectorAll('.pack-option').forEach(x=>x.classList.remove('selected'));
       option.classList.add('selected');
-      current.pack = option.dataset.pack || '100 g';
+      current.pack = option.dataset.pack || '100 gm';
       current.price = Number(option.dataset.price || 0);
       modalTotal.textContent = 'Price: ' + money(current.price * current.qty);
     });
@@ -580,5 +641,21 @@ document.addEventListener('DOMContentLoaded', function () {
     <button type="button" id="successClose">Continue Shopping</button>
   </div>
 </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const search=document.getElementById('productSearch');
+  if(search){
+    search.addEventListener('input',function(){
+      const term=this.value.trim().toLowerCase();
+      document.querySelectorAll('.product-card').forEach(card=>{
+        const text=card.textContent.toLowerCase();
+        card.classList.toggle('is-hidden', term && !text.includes(term));
+      });
+    });
+  }
+});
+</script>
 
 </body></html>
